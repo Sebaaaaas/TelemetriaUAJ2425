@@ -1,0 +1,10 @@
+C:\Users\sebas\OneDrive\Desktop\ASIGNATURAS\24_25\UAJ\TelemetriaDT\TelemetriaUAJDOC\TelemetriaDOC\TelemetriaDOC\bin\Debug\netstandard2.1\TelemetriaDOC.deps.json
+C:\Users\sebas\OneDrive\Desktop\ASIGNATURAS\24_25\UAJ\TelemetriaDT\TelemetriaUAJDOC\TelemetriaDOC\TelemetriaDOC\bin\Debug\netstandard2.1\TelemetriaDOC.dll
+C:\Users\sebas\OneDrive\Desktop\ASIGNATURAS\24_25\UAJ\TelemetriaDT\TelemetriaUAJDOC\TelemetriaDOC\TelemetriaDOC\bin\Debug\netstandard2.1\TelemetriaDOC.pdb
+C:\Users\sebas\OneDrive\Desktop\ASIGNATURAS\24_25\UAJ\TelemetriaDT\TelemetriaUAJDOC\TelemetriaDOC\TelemetriaDOC\obj\Debug\netstandard2.1\TelemetriaDOC.csproj.AssemblyReference.cache
+C:\Users\sebas\OneDrive\Desktop\ASIGNATURAS\24_25\UAJ\TelemetriaDT\TelemetriaUAJDOC\TelemetriaDOC\TelemetriaDOC\obj\Debug\netstandard2.1\TelemetriaDOC.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sebas\OneDrive\Desktop\ASIGNATURAS\24_25\UAJ\TelemetriaDT\TelemetriaUAJDOC\TelemetriaDOC\TelemetriaDOC\obj\Debug\netstandard2.1\TelemetriaDOC.AssemblyInfoInputs.cache
+C:\Users\sebas\OneDrive\Desktop\ASIGNATURAS\24_25\UAJ\TelemetriaDT\TelemetriaUAJDOC\TelemetriaDOC\TelemetriaDOC\obj\Debug\netstandard2.1\TelemetriaDOC.AssemblyInfo.cs
+C:\Users\sebas\OneDrive\Desktop\ASIGNATURAS\24_25\UAJ\TelemetriaDT\TelemetriaUAJDOC\TelemetriaDOC\TelemetriaDOC\obj\Debug\netstandard2.1\TelemetriaDOC.csproj.CoreCompileInputs.cache
+C:\Users\sebas\OneDrive\Desktop\ASIGNATURAS\24_25\UAJ\TelemetriaDT\TelemetriaUAJDOC\TelemetriaDOC\TelemetriaDOC\obj\Debug\netstandard2.1\TelemetriaDOC.dll
+C:\Users\sebas\OneDrive\Desktop\ASIGNATURAS\24_25\UAJ\TelemetriaDT\TelemetriaUAJDOC\TelemetriaDOC\TelemetriaDOC\obj\Debug\netstandard2.1\TelemetriaDOC.pdb
