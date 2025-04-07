@@ -2,9 +2,10 @@
 
 namespace TelemetriaDOC
 {
-    public class Class1
+    internal class Class1
     {
-        public static int Multiply(int a, int b)
+        public Class1(){}
+        public int Multiply(int a, int b)
         {
             return a * b;
         }
