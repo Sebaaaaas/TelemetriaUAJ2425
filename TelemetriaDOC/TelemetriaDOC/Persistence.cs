@@ -1,0 +1,11 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace TelemetriaDOC
+{
+    public enum Type {Archive}
+    abstract class Persistence
+    {
+    }
+}
