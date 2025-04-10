@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Usuario\\Documents\\GitHub\\TelemetriaUAJ2425\\TelemetriaDOC\\TelemetriaDOC\\TelemetriaDOC.csproj": {}
+    "C:\\Users\\sebas\\OneDrive\\Desktop\\ASIGNATURAS\\24_25\\UAJ\\TelemetriaDT\\TelemetriaUAJDOC\\TelemetriaDOC\\TelemetriaDOC\\TelemetriaDOC.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Usuario\\Documents\\GitHub\\TelemetriaUAJ2425\\TelemetriaDOC\\TelemetriaDOC\\TelemetriaDOC.csproj": {
+    "C:\\Users\\sebas\\OneDrive\\Desktop\\ASIGNATURAS\\24_25\\UAJ\\TelemetriaDT\\TelemetriaUAJDOC\\TelemetriaDOC\\TelemetriaDOC\\TelemetriaDOC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Documents\\GitHub\\TelemetriaUAJ2425\\TelemetriaDOC\\TelemetriaDOC\\TelemetriaDOC.csproj",
+        "projectUniqueName": "C:\\Users\\sebas\\OneDrive\\Desktop\\ASIGNATURAS\\24_25\\UAJ\\TelemetriaDT\\TelemetriaUAJDOC\\TelemetriaDOC\\TelemetriaDOC\\TelemetriaDOC.csproj",
         "projectName": "TelemetriaDOC",
-        "projectPath": "C:\\Users\\Usuario\\Documents\\GitHub\\TelemetriaUAJ2425\\TelemetriaDOC\\TelemetriaDOC\\TelemetriaDOC.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Documents\\GitHub\\TelemetriaUAJ2425\\TelemetriaDOC\\TelemetriaDOC\\obj\\",
+        "projectPath": "C:\\Users\\sebas\\OneDrive\\Desktop\\ASIGNATURAS\\24_25\\UAJ\\TelemetriaDT\\TelemetriaUAJDOC\\TelemetriaDOC\\TelemetriaDOC\\TelemetriaDOC.csproj",
+        "packagesPath": "C:\\Users\\sebas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sebas\\OneDrive\\Desktop\\ASIGNATURAS\\24_25\\UAJ\\TelemetriaDT\\TelemetriaUAJDOC\\TelemetriaDOC\\TelemetriaDOC\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\sebas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

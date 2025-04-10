@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TelemetriaDOC
 {
     public class Tracker
     {
-        // private static Class1 c1 = new Class1();
         private static Tracker instance = null;
         private Serializer serializer;
         private Persistence persistence;
@@ -53,7 +53,6 @@ namespace TelemetriaDOC
             }
         }
 
-        public static int Number(int a, int b) { return Class1.Multiply(a, b); }
         public void TrackEvent(Event e) { }
     }
 }
