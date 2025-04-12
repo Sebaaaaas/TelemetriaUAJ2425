@@ -12,10 +12,13 @@ namespace TelemetriaDOC
         public ArchivePers(string name, Serializer serializer) {
             _name = name+serializer.getExtension();
             file =new StreamWriter(_name,true);
-            file.WriteLine("Hello");
-            //Quitar mas alante
-            close();
+            
 
+        }
+        public override void write(string s)
+        {
+            file.WriteLine(s);
+            close();
         }
         public void close()
         {

@@ -31,6 +31,9 @@ namespace TelemetriaDOC
             //Iniciar persistencia
             instance.initPersistence(Type.Archive, "prueba");
 
+            instance.flush();
+            
+
             return true;
         }
 
@@ -54,5 +57,10 @@ namespace TelemetriaDOC
         }
 
         public void TrackEvent(Event e) { }
+
+        public void flush()
+        {
+            persistence.write(serializer.serialize(new TestEvent(0,0,1)));
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace TelemetriaDOC
     public enum Format { JSON };
     interface Serializer
     {
-        string serialize();
+        string serialize(Event e);
         string getExtension();
     }
 }
