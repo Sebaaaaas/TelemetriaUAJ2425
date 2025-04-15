@@ -4,8 +4,9 @@ using System.Text;
 
 namespace TelemetriaDOC
 {
-    public enum Type {Archive}
-    abstract class Persistence
+    public enum Type {Disk}
+    interface Persistence
     {
+        void persist();
     }
 }

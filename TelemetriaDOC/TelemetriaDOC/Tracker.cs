@@ -18,18 +18,20 @@ namespace TelemetriaDOC
             return instance;
         }
 
-        public static bool Init()
+        // Format hace referencia a .json, .yaml...
+        // PersistenceType hace referencia a si vamos a persistir los datos en disco
+        public static bool Init(Format format_, Type persistenceType_)
         {
             if (instance != null)
                 return false;
 
-            instance= new Tracker();
+            instance = new Tracker();
 
             //Iniciar serializador
-            instance.initSerializer(Format.JSON);
+            instance.initSerializer(format_);
 
             //Iniciar persistencia
-            instance.initPersistence(Type.Archive, "prueba");
+            instance.initPersistence(persistenceType_, "prueba");
 
             return true;
         }
@@ -47,12 +49,12 @@ namespace TelemetriaDOC
         public void initPersistence(Type typeSave,string name) {
             switch (typeSave)
             {
-                case Type.Archive:
-                    persistence = new ArchivePers(name, serializer);
+                case Type.Disk:
+                    persistence = new DiskPersistence(name, serializer);
                     break;
             }
         }
 
-        public void TrackEvent(Event e) { }
+        public void TrackEvent(Event e) { persistence.persist(); }
     }
 }
