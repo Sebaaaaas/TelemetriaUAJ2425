@@ -8,7 +8,7 @@ namespace TelemetriaDOC
         private static Tracker instance = null;
         private Serializer serializer;
         private Persistence persistence;
-        
+
         private Tracker()
         {
         }
@@ -18,9 +18,7 @@ namespace TelemetriaDOC
             return instance;
         }
 
-        // Format hace referencia a .json, .yaml...
-        // PersistenceType hace referencia a si vamos a persistir los datos en disco
-        public static bool Init(Format format_, Type persistenceType_)
+        public static bool Init()
         {
             if (instance != null)
                 return false;
@@ -28,17 +26,20 @@ namespace TelemetriaDOC
             instance = new Tracker();
 
             //Iniciar serializador
-            instance.initSerializer(format_);
+            instance.initSerializer(Format.JSON);
 
             //Iniciar persistencia
-            instance.initPersistence(persistenceType_, "prueba");
+            instance.initPersistence(Type.Disk, "prueba");
+
+            instance.flush();
+
 
             return true;
         }
 
         public void initSerializer(Format format)
         {
-            switch(format)
+            switch (format)
             {
                 case Format.JSON:
                     serializer = new SerializerJSON();
@@ -46,7 +47,8 @@ namespace TelemetriaDOC
             }
         }
 
-        public void initPersistence(Type typeSave,string name) {
+        public void initPersistence(Type typeSave, string name)
+        {
             switch (typeSave)
             {
                 case Type.Disk:
@@ -55,6 +57,22 @@ namespace TelemetriaDOC
             }
         }
 
-        public void TrackEvent(Event e) { persistence.persist(); }
+        public static void TrackEvent(Event e) {
+            instance.persistence.write(instance.serializer.serialize(e));
+        }
+
+        public void flush()
+        {
+            persistence.write(serializer.serialize(new TestEvent(0, 0, 1)));
+        }
+
+        public static void closing()
+        {
+            instance.CloseArch();
+        }
+        private void CloseArch()
+        {
+            persistence.close();
+        }
     }
 }

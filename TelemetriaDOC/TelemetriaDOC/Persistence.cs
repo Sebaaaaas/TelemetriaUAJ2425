@@ -5,8 +5,12 @@ using System.Text;
 namespace TelemetriaDOC
 {
     public enum Type {Disk}
-    interface Persistence
+    public abstract class Persistence
     {
-        void persist();
+        void persist() { }
+
+        public virtual void write(string s) { }
+
+        public virtual void close() { }
     }
 }

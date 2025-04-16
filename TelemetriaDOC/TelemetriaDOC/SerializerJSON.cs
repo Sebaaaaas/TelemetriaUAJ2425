@@ -6,13 +6,24 @@ namespace TelemetriaDOC
 {
     public class SerializerJSON : Serializer
     {
-        public string serialize()
+        bool firstTime = true;
+        public string serialize(Event e)
         {
-            return "Hello JSON";
+            string s = "";
+            if (firstTime)
+            {
+                s += "{\n";
+            }
+            s += e.serializeToJSON();
+            return s;
         }
         public string getExtension()
         {
             return ".json";
+        }
+        public string closeJson()
+        {
+            return "\n}\n";
         }
     }
 }
