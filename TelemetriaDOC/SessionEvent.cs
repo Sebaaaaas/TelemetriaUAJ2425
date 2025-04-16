@@ -8,7 +8,7 @@ namespace TelemetriaDOC
     {
         public enum EventType { SessionStart, SessionEnd };
         EventType _type;
-        public SessionEvent(Guid id_session, int timestamp, EventType type) : base(id_session, timestamp)
+        public SessionEvent(float timestamp, EventType type) : base(timestamp)
         {
             _type = type;
         }

@@ -11,6 +11,8 @@ namespace TelemetriaDOC
 
         private EventQueue eventQueue;
 
+        private Guid sessionID;
+
         private Tracker()
         {
         }
@@ -35,6 +37,7 @@ namespace TelemetriaDOC
 
             instance.eventQueue = new EventQueue(ref instance, 3);
 
+            instance.sessionID = Guid.NewGuid();
 
             return true;
         }
@@ -59,7 +62,9 @@ namespace TelemetriaDOC
             }
         }
 
-        public static void TrackEvent(Event e) {
+        public static void TrackEvent(Event e) 
+        {
+            e.setSessionID(instance.sessionID);
             instance.eventQueue.AddEvent(e);
         }
 
@@ -86,11 +91,6 @@ namespace TelemetriaDOC
         {
             instance.eventQueue.flushQueue();
             persistence.close();
-        }
-        public void StartSession(int timestamp)
-        {
-            Guid sessionID = System.Guid.NewGuid();
-            persistence.write(serializer.serialize(new SessionEvent(sessionID, timestamp, SessionEvent.EventType.SessionStart)));
         }
     }
 }

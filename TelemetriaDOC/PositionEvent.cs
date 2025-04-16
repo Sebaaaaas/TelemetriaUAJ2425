@@ -9,7 +9,7 @@ namespace TelemetriaDOC
         private int _x;
         private int _y;
         private int _z;
-        public PositionEvent(int id_session, float timestamp, int posx, int posy, int posz) : base(id_session, timestamp)
+        public PositionEvent(float timestamp, int posx, int posy, int posz) : base(timestamp)
         {
             _x = posx;
             _y = posy;

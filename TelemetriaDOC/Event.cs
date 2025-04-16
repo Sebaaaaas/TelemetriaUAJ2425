@@ -11,10 +11,9 @@ namespace TelemetriaDOC
         private Guid _id_session;
         private float _timestamp;
 
-        public Event(Guid id_session, float timestamp)
+        public Event(float timestamp)
         {
             name = "Event";
-            _id_session = id_session;
             _timestamp = timestamp;
         }
 
@@ -25,5 +24,6 @@ namespace TelemetriaDOC
             s += "    \"timestamp\" : " + _timestamp;
             return s;
         }
+        public void setSessionID(Guid sessionID) { _id_session = sessionID; }
     }
 }
