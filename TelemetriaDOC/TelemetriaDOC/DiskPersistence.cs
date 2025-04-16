@@ -18,12 +18,12 @@ namespace TelemetriaDOC
             file = new StreamWriter(persistanceFileName, true);
         }
 
-        public void persist()
-        {
-            file.WriteLine("text");
-            file.Flush();
-            throw new NotImplementedException();
-        }
+        //public void persist()
+        //{
+        //    file.WriteLine("text");
+        //    file.Flush();
+        //    throw new NotImplementedException();
+        //}
 
         public override void write(string s)
         {

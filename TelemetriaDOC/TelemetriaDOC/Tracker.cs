@@ -9,6 +9,8 @@ namespace TelemetriaDOC
         private Serializer serializer;
         private Persistence persistence;
 
+        private EventQueue eventQueue;
+
         private Tracker()
         {
         }
@@ -31,7 +33,7 @@ namespace TelemetriaDOC
             //Iniciar persistencia
             instance.initPersistence(Type.Disk, "prueba");
 
-            instance.flush();
+            instance.eventQueue = new EventQueue(ref instance, 3);
 
 
             return true;
@@ -58,12 +60,22 @@ namespace TelemetriaDOC
         }
 
         public static void TrackEvent(Event e) {
-            instance.persistence.write(instance.serializer.serialize(e));
+            instance.eventQueue.AddEvent(e);
         }
 
-        public void flush()
+        public void flush(ref Queue<Event> events) // <<<<<<<<<<< revisar lo del ref que este bien
         {
-            persistence.write(serializer.serialize(new TestEvent(0, 0, 1)));
+            string text = "";
+
+            // Serializamos cada evento de la cola
+            while(events.Count > 0)
+            {
+                text += serializer.serialize(events.Dequeue());
+            }
+
+            events.Clear();
+
+            persistence.write(text);            
         }
 
         public static void closing()
@@ -72,6 +84,7 @@ namespace TelemetriaDOC
         }
         private void CloseArch()
         {
+            instance.eventQueue.flushQueue();
             persistence.close();
         }
     }
