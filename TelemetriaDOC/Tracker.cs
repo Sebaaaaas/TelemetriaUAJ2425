@@ -87,5 +87,10 @@ namespace TelemetriaDOC
             instance.eventQueue.flushQueue();
             persistence.close();
         }
+        public void StartSession(int timestamp)
+        {
+            Guid sessionID = System.Guid.NewGuid();
+            persistence.write(serializer.serialize(new SessionEvent(sessionID, timestamp, SessionEvent.EventType.SessionStart)));
+        }
     }
 }
