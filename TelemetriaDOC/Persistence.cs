@@ -8,5 +8,7 @@ namespace TelemetriaDOC
     abstract class Persistence
     {
         public virtual void write(string s) { }
+
+        public virtual void close() { }
     }
 }

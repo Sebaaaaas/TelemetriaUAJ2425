@@ -8,8 +8,8 @@ namespace TelemetriaDOC
     {
         string name;
         private int _id_session;
-        private int _timestamp;
-        public Event(int id_session,int timestamp) {
+        private float _timestamp;
+        public Event(int id_session,float timestamp) {
             name = "Event";
             _id_session = id_session;
             _timestamp = timestamp;

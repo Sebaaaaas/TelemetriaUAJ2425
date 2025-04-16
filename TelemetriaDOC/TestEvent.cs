@@ -7,7 +7,7 @@ namespace TelemetriaDOC
     public class TestEvent : Event
     {
         private int _level;
-        public TestEvent(int id_session,int timestamp,int level) : base(id_session, timestamp)
+        public TestEvent(int id_session,float timestamp,int level) : base(id_session, timestamp)
         {
             _level = level;
         }
