@@ -20,7 +20,7 @@ namespace TelemetriaDOC
             s += base.serializeToJSON();
             s += ",\n";
             s += "    \"Type\" : " + _type.ToString();
-            s += "\n  }\n";
+            s += "\n  }";
             return s;
         }
     }

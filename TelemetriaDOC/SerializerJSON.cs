@@ -7,15 +7,22 @@ namespace TelemetriaDOC
     public class SerializerJSON : Serializer
     {
         bool firstTime = true;
+        public SerializerJSON()
+        {
+            
+        }
         public string serialize(Event e)
         {
-            string s = "";
             if (firstTime)
             {
-                s += "{\n";
+                firstTime = false; 
+                return "[\n"+ e.serializeToJSON()+",\n";
             }
-            s += e.serializeToJSON();
-            return s;
+            else
+            {
+                return e.serializeToJSON()+",\n";
+            }
+            
         }
         public string getExtension()
         {
@@ -23,7 +30,7 @@ namespace TelemetriaDOC
         }
         public string closeJson()
         {
-            return "\n}\n";
+            return "\n]\n";
         }
     }
 }

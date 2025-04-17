@@ -47,7 +47,7 @@ namespace TelemetriaDOC
             switch (format)
             {
                 case Format.JSON:
-                    serializer = new SerializerJSON();
+                    instance.serializer = new SerializerJSON();
                     break;
             }
         }
@@ -57,7 +57,7 @@ namespace TelemetriaDOC
             switch (typeSave)
             {
                 case Type.Disk:
-                    persistence = new DiskPersistence(name, serializer);
+                    instance.persistence = new DiskPersistence(name, instance.serializer);
                     break;
             }
         }
@@ -75,12 +75,12 @@ namespace TelemetriaDOC
             // Serializamos cada evento de la cola
             while(events.Count > 0)
             {
-                text += serializer.serialize(events.Dequeue());
+                text += instance.serializer.serialize(events.Dequeue());
             }
 
             events.Clear();
 
-            persistence.write(text);            
+            instance.persistence.write(text);            
         }
 
         public static void closing()
@@ -90,7 +90,7 @@ namespace TelemetriaDOC
         private void CloseArch()
         {
             instance.eventQueue.flushQueue();
-            persistence.close();
+            instance.persistence.close();
         }
     }
 }

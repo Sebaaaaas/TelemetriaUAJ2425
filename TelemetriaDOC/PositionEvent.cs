@@ -22,7 +22,7 @@ namespace TelemetriaDOC
             s += base.serializeToJSON();
             s += ",\n";
             s += "    \"Position X\" : " + _x + ",\n" + "    \"Position Y\" : " + _y + ",\n" + "    \"Position Z\" : " + _z;
-            s += "\n  }\n";
+            s += "\n  }";
             return s;
         }
     }
