@@ -10,15 +10,15 @@ namespace TelemetriaDOC
         public TargetHitEvent(float timestamp, string _hitterTag) : base(timestamp)
         {
             hitterTag = _hitterTag;
+            name = "TargetHitEvent";
         }
-        public override string getName() { return "HitterTag"; }
         public override string serializeToJSON()
         {
-            string s = "  {\n";
+            string s = "{";
             s += base.serializeToJSON();
-            s += ",\n";
-            s += "    \"Hitter\" : " + hitterTag;
-            s += "\n  }";
+            s += ", ";
+            s += "\"Hitter\" : " + hitterTag;
+            s += "}";
             return s;
         }
     }

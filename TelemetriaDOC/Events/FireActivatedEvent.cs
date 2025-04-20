@@ -8,16 +8,15 @@ namespace TelemetriaDOC
     {
         public FireActivatedEvent(float timestamp) : base(timestamp)
         {
-           
+            name = "FireActivatedEvent";
         }
-        public override string getName() { return "FireActivated"; }
         public override string serializeToJSON()
         {
-            string s = "  {\n";
+            string s = "{";
             s += base.serializeToJSON();
-            s += ",\n";
-            s += "    \"FireActivated\" : " + true;
-            s += "\n  }";
+            s += ", ";
+            s += "\"FireActivated\" : " + true;
+            s += "}";
             return s;
         }
     }

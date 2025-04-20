@@ -10,15 +10,15 @@ namespace TelemetriaDOC
         public Puzzle1EndEvent(float timestamp, Guid _gameID) : base(timestamp)
         {
             gameID = _gameID;
+            name = "Puzzle1EndEvent";
         }
-        public override string getName() { return "Puzzle1EndEvent"; }
         public override string serializeToJSON()
         {
-            string s = "  {\n";
+            string s = "{";
             s += base.serializeToJSON();
-            s += ",\n";
-            s += "    \"GameID\" : " + gameID;
-            s += "\n  }";
+            s += ", ";
+            s += "\"GameID\" : " + gameID;
+            s += "}";
             return s;
         }
     }

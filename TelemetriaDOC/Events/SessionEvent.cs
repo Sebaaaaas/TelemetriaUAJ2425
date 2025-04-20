@@ -11,16 +11,14 @@ namespace TelemetriaDOC
         public SessionEvent(float timestamp, EventType type) : base(timestamp)
         {
             _type = type;
+            name = _type.ToString();
         }
 
-        public override string getName() { return "SessionEvent"; }
         public override string serializeToJSON()
         {
-            string s = "  {\n";
+            string s = "{";
             s += base.serializeToJSON();
-            s += ",\n";
-            s += "    \"Type\" : " + _type.ToString();
-            s += "\n  }";
+            s += "}";
             return s;
         }
     }

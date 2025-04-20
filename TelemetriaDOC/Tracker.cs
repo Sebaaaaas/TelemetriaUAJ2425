@@ -33,7 +33,7 @@ namespace TelemetriaDOC
             instance.initSerializer(Format.JSON);
 
             //Iniciar persistencia
-            instance.initPersistence(Type.Disk, "prueba");
+            instance.initPersistence(Type.Disk, "TrackedEvents");
 
             instance.eventQueue = new EventQueue(ref instance, 3);
 

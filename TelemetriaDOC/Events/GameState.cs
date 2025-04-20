@@ -13,14 +13,13 @@ namespace TelemetriaDOC
             _type = type;
         }
 
-        public override string getName() { return "GameStateEvent"; }
         public override string serializeToJSON()
         {
-            string s = "  {\n";
+            string s = "{";
             s += base.serializeToJSON();
-            s += ",\n";
-            s += "    \"Type\" : " + _type.ToString();
-            s += "\n  }";
+            s += ", ";
+            s += "\"Type\" : " + _type.ToString();
+            s += "}";
             return s;
         }
 

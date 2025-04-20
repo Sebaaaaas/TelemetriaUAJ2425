@@ -8,16 +8,15 @@ namespace TelemetriaDOC
     {
         public PlayerAttackEvent(float timestamp) : base(timestamp)
         {
-
+            name = "PlayerAttackEvent";
         }
-        public override string getName() { return "PlayerAtack"; }
         public override string serializeToJSON()
         {
-            string s = "  {\n";
+            string s = "{";
             s += base.serializeToJSON();
-            s += ",\n";
-            s += "    \"PlayerAtack\" : " + true;
-            s += "\n  }";
+            s += ", ";
+            s += "\"PlayerAtack\" : " + true;
+            s += "}";
             return s;
         }
     }
