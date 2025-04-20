@@ -15,6 +15,8 @@ namespace TelemetriaDOC
 
         private Tracker()
         {
+            // Para que los float se escriban siempre con "." en lugar de con ","
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
         }
 
         public static Tracker Instance()
