@@ -13,22 +13,34 @@ namespace TelemetriaDOC
         }
         public string serialize(Event e)
         {
-            if (firstTime)
+            string s = "";
+            if (!firstTime)
             {
-                firstTime = false; 
-                return "[\n"+ e.serializeToJSON()+",\n";
+                s += ",\n";
             }
             else
             {
-                return e.serializeToJSON()+",\n";
+                s += "[\n";
+                firstTime = false;
             }
+            s += e.serializeToJSON();
+            return s;
+            //if (firstTime)
+            //{
+            //    firstTime = false; 
+            //    return "[\n"+ e.serializeToJSON()+",\n";
+            //}
+            //else
+            //{
+            //    return e.serializeToJSON()+",\n";
+            //}
             
         }
         public string getExtension()
         {
             return ".json";
         }
-        public string closeJson()
+        public string close()
         {
             return "\n]\n";
         }

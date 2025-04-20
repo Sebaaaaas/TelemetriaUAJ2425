@@ -9,5 +9,7 @@ namespace TelemetriaDOC
     {
         string serialize(Event e);
         string getExtension();
+
+        string close();
     }
 }
