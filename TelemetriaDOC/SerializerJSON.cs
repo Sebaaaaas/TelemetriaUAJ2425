@@ -25,15 +25,6 @@ namespace TelemetriaDOC
             }
             s += e.serializeToJSON();
             return s;
-            //if (firstTime)
-            //{
-            //    firstTime = false; 
-            //    return "[\n"+ e.serializeToJSON()+",\n";
-            //}
-            //else
-            //{
-            //    return e.serializeToJSON()+",\n";
-            //}
             
         }
         public string getExtension()

@@ -28,7 +28,7 @@ namespace TelemetriaDOC
             if (queue.Count >= max_size)
             {                
                 flushQueue();
-                //queue.Dequeue();
+                
             }
                 
 

@@ -24,7 +24,7 @@ namespace TelemetriaDOC
             return instance;
         }
 
-        public static bool Init()
+        public static bool Init(Format format, Type type, string name, int sizeQueue)
         {
             if (instance != null)
                 return false;
@@ -32,12 +32,12 @@ namespace TelemetriaDOC
             instance = new Tracker();
 
             //Iniciar serializador
-            instance.initSerializer(Format.JSON);
+            instance.initSerializer(format);
 
             //Iniciar persistencia
-            instance.initPersistence(Type.Disk, "TrackedEvents");
+            instance.initPersistence(type, name);
 
-            instance.eventQueue = new EventQueue(ref instance, 3);
+            instance.eventQueue = new EventQueue(ref instance, sizeQueue);
 
             instance.sessionID = Guid.NewGuid();
 

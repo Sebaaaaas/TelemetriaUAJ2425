@@ -14,8 +14,6 @@ namespace TelemetriaDOC
         {
             string s = "{";
             s += base.serializeToJSON();
-            s += ", ";
-            s += "\"PlayerAtack\" : " + true;
             s += "}";
             return s;
         }

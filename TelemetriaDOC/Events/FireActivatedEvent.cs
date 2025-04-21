@@ -14,8 +14,6 @@ namespace TelemetriaDOC
         {
             string s = "{";
             s += base.serializeToJSON();
-            s += ", ";
-            s += "\"FireActivated\" : " + true;
             s += "}";
             return s;
         }
