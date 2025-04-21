@@ -96,6 +96,7 @@ def processEventsWithContext(data):
     while currentEventIx < totalEvents:
         currentEvent = sorted_data[currentEventIx]
         if len(contextStack) == 0:
+            
             # If the context stack is empty, stop processing
             break
         else:
@@ -112,17 +113,28 @@ def processEventsWithContext(data):
     gameSessionLengthMs = [game.gameSessionLengthMs for game in contextStack[-1].games]
 
     # Store all deaths in a list.
-    deaths = []
-    levels = []
-    for game in contextStack[-1].games:
-        for level in game.levels:
-            levels.append(dict(levelid=level.id, result = level.levelResult))
-            deaths.extend(level.deaths)
+    #deaths = []
+    #levels = []
+   # fireActivated=[]
+    #hitFire=[]
+    #for game in contextStack[-1].games:
+        #for level in game.levels:
+            #levels.append(dict(levelid=level.id, result = level.levelResult))
+            #deaths.extend(level.deaths)
+            #fire_activations = sum(1 for e in .events if e.type == "FireActivatedEvent")
+            #hit_by_fire=sum(1 for e in game.events if e.type == "TargetHitEvent"and e.Hitter == "Fire")
+            #fireActivated.append(fire_activations)
+            #hitFire.append(hit_by_fire)
+    fireActivated = sum(1 for e in sorted_data if e.get("eventType") == "FireActivatedEvent")
+    hitByFire = sum(1 for e in sorted_data if e.get("eventType") == "TargetHitEvent" and e.get("Hitter") == "Fire")
+    percentajeFire=hitByFire/fireActivated
+
 
     return {
         "gameSessionLengthMs": gameSessionLengthMs,
-        "deaths": deaths,
-        "levels": levels
+        "percentajeFire":percentajeFire
+        #"deaths": deaths,
+        #"levels": levels
     }
 
 def drawHexbinHeatmap(data_list, background_image, output_file, gridsize=(27, 22), extent=[0, 865, 0, 705]):
@@ -180,6 +192,7 @@ if __name__ == '__main__':
     folder_path = './data'
     all_game_session_lengths = []
 
+    
     """Approach 2 (Advances): Events are streamed so they are procesed sequentially.
     Every event is processed depending on the current context (defined by the events that
     we have already processed). Contexts are stacked so the event is processed using the top
@@ -190,6 +203,7 @@ if __name__ == '__main__':
     """
     # Initialize lists to aggregate results
     all_game_session_lengths = []
+    percentajeFireTotal=0
     all_deaths = []
     all_levels = []
 
@@ -212,9 +226,13 @@ if __name__ == '__main__':
 
             # Aggregate results
             all_game_session_lengths.extend(results["gameSessionLengthMs"])
-            all_deaths.extend(results["deaths"])
-            all_levels.extend(results["levels"])
+            #all_deaths.extend(results["deaths"])
+            #all_levels.extend(results["levels"])
+            percentajeFireTotal+=results["percentajeFire"]
+            print(percentajeFireTotal)
+            
 
+            
     # Compute aggregated statistics for game session lengths
     s = pd.Series(all_game_session_lengths)
     print("Aggregated Game Session Length Statistics:")

@@ -59,7 +59,7 @@ class RootContextData(ContextData):
     def parseEvent(self, event) -> bool:
         """Creates a new Session context on GAME:START event
         """
-        if event['eventType'] == "GAME:START":
+        if event['eventType'] == "GameStart":
            self.contextStack.append(GameContextData(self.contextStack, self))
            # The event is not consumed because it will be used by the game context
            return False
@@ -90,13 +90,13 @@ class GameContextData(ContextData):
         """It stores information on GAME:START and GAME:END events.
         It also creates a LevelContext when a level starts
         """
-        if event['eventType'] == "LEVEL:START":
+        if event['eventType'] == "LevelStart":
            # Create a level context and don't consume the event
            self.contextStack.append(LevelContextData(self.contextStack, self))
            return False
-        elif event['eventType'] == "GAME:START":
+        elif event['eventType'] == "GameStart":
            self.tsGameStart = event['timestamp']
-        elif (event['eventType'] == "GAME:END"):
+        elif (event['eventType'] == "GameEnd"):
             self.tsGameEnd = event['timestamp'] 
             self.gameSessionLengthMs = self.tsGameEnd - self.tsGameStart
             self.popContext()
@@ -129,10 +129,10 @@ class LevelContextData(ContextData):
         """It stores data on LEVEL:START and LEVEL:END
         Additionally, it stores death positions in PLAYER:DEATH events
         """
-        if event['eventType'] == "LEVEL:START":
+        if event['eventType'] == "LevelStart":
             self.id = event["levelId"]
             self.tsLevelStart = event['timestamp']       
-        elif (event['eventType'] == "LEVEL:END") and (self.id == event["levelId"]):
+        elif (event['eventType'] == "LevelEnd"): #and (self.id == event["levelId"]):
             self.tsLevelEnd = event['timestamp'] 
             self.levelLengthMs = self.tsLevelEnd - self.tsLevelStart
             self.levelResult = event["result"]
