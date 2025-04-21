@@ -70,7 +70,7 @@ namespace TelemetriaDOC
             instance.eventQueue.AddEvent(e);
         }
 
-        public void flush(ref Queue<Event> events) // <<<<<<<<<<< revisar lo del ref que este bien
+        public void flush(ref Queue<Event> events)
         {
             string text = "";
 

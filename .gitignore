@@ -2,3 +2,10 @@ TelemetriaDOC/[Bb]in/
 TelemetriaDOC/[Oo]bj/
 
 .vs/
+
+
+#Python
+__pycache__/
+
+# Jupyter Notebook
+.ipynb_checkpoints
