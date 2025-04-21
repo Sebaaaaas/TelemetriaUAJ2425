@@ -31,7 +31,7 @@ namespace TelemetriaDOC
         {
             return ".json";
         }
-        public string close()
+        public string serializerEnding()
         {
             return "\n]\n";
         }

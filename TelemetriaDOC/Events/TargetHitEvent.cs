@@ -17,7 +17,7 @@ namespace TelemetriaDOC
             string s = "{";
             s += base.serializeToJSON();
             s += ", ";
-            s += "\"Hitter\" : " + hitterTag;
+            s += "\"Hitter\" : \"" + hitterTag+ "\"";
             s += "}";
             return s;
         }

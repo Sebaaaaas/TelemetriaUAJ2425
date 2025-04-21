@@ -20,8 +20,8 @@ namespace TelemetriaDOC
 
         public virtual string serializeToJSON()
         {
-            string s = "\"eventType\":" + name.ToString() + ", ";
-            s += "\"id\":" + _id_session.ToString() + ", ";
+            string s = "\"eventType\": \"" + name.ToString() + "\", ";
+            s += "\"id\":\"" + _id_session.ToString() + "\", ";
             s += "\"timestamp\":" + _timestamp;
             return s;
         }

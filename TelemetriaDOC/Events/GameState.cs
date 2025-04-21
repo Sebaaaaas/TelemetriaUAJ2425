@@ -10,6 +10,7 @@ namespace TelemetriaDOC
         EventType _type;
         public GameStateEvent(float timestamp, EventType type) : base(timestamp)
         {
+            name = type.ToString();
             _type = type;
         }
 
@@ -17,8 +18,6 @@ namespace TelemetriaDOC
         {
             string s = "{";
             s += base.serializeToJSON();
-            s += ", ";
-            s += "\"Type\" : " + _type.ToString();
             s += "}";
             return s;
         }

@@ -92,7 +92,7 @@ namespace TelemetriaDOC
         private void CloseArch()
         {
             instance.eventQueue.flushQueue();
-            instance.persistence.write(instance.serializer.close());
+            instance.persistence.write(instance.serializer.serializerEnding());
             instance.persistence.close();
         }
     }

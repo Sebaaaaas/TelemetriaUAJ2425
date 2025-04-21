@@ -12,7 +12,7 @@ namespace TelemetriaDOC
         public DiskPersistence(string persistanceFileName_, Serializer serializer_)
         {
             persistanceFileName = persistanceFileName_ + serializer_.getExtension();
-            file = new StreamWriter(persistanceFileName, true);
+            file = new StreamWriter(persistanceFileName, false);
         }
 
         public override void write(string s)
