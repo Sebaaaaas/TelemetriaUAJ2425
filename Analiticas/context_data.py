@@ -59,8 +59,8 @@ class RootContextData(ContextData):
     def parseEvent(self, event) -> bool:
         """Creates a new Session context on GAME:START event
         """
-        if event['eventType'] == "GameStart":
-           self.contextStack.append(GameContextData(self.contextStack, self))
+        if event['eventType'] == "SessionStart":
+           self.contextStack.append(SessionContextData(self.contextStack, self))
            # The event is not consumed because it will be used by the game context
            return False
         return True
@@ -71,7 +71,7 @@ class RootContextData(ContextData):
         self.games.append(childContextData)
 
 
-class GameContextData(ContextData):
+class SessionContextData(ContextData):
     """Represents a game session (when the user starts a new game until wins or fails)
     It stores when a game starts and finishes, its length and the information 
     extracted from the levels played during the game session
@@ -84,19 +84,19 @@ class GameContextData(ContextData):
         self.tsGameStart = None
         self.tsGameEnd = None
         self.gameSessionLengthMs = 0
-        self.levels = []
+        self.games = []
 
     def parseEvent(self, event) -> bool:
         """It stores information on GAME:START and GAME:END events.
-        It also creates a LevelContext when a level starts
+        It also creates a GameContext when a level starts
         """
-        if event['eventType'] == "LevelStart":
+        if event['eventType'] == "GameStart":
            # Create a level context and don't consume the event
-           self.contextStack.append(LevelContextData(self.contextStack, self))
+           self.contextStack.append(GameContextData(self.contextStack, self))
            return False
-        elif event['eventType'] == "GameStart":
+        elif event['eventType'] == "SessionStart":
            self.tsGameStart = event['timestamp']
-        elif (event['eventType'] == "GameEnd"):
+        elif (event['eventType'] == "SessionEnd"):
             self.tsGameEnd = event['timestamp'] 
             self.gameSessionLengthMs = self.tsGameEnd - self.tsGameStart
             self.popContext()
@@ -108,7 +108,7 @@ class GameContextData(ContextData):
         self.levels.append(childContextData)
 
 
-class LevelContextData(ContextData):
+class GameContextData(ContextData):
     """It stores information about level events:
     - When the level starts and ends and its lenght
     - The event result
@@ -124,6 +124,7 @@ class LevelContextData(ContextData):
         self.levelLengthMs = 0
         self.levelResult = None    
         self.deaths = []    
+        self.games = []
 
     def parseEvent(self, event) -> bool:
         """It stores data on LEVEL:START and LEVEL:END
@@ -137,7 +138,7 @@ class LevelContextData(ContextData):
             self.levelLengthMs = self.tsLevelEnd - self.tsLevelStart
             self.levelResult = event["result"]
             self.popContext()
-        elif (event['eventType'] == "PLAYER:DEATH"):
-            self.deaths.append( dict( x=event['x'], y=event['y']))
+        elif (event['eventType'] == "TargetHitEvent"):
+            self.deaths.append( dict( hitter=event['Hitter']))
     
         return True

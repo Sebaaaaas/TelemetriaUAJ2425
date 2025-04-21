@@ -5,50 +5,12 @@ import json
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-from context_data import ContextData, RootContextData, GameContextData, LevelContextData
+from context_data import ContextData, RootContextData, SessionContextData, GameContextData
 
 
 ########################################
 ### Function section
 ########################################
-def gameSession(eventList):
-    """
-    Computes the lengths of game sessions based on a list of events.
-
-    This function identifies the start and end of each game session using specific event types 
-    ("GAME:START" and "GAME:END") and calculates the duration of each session.
-
-    Args:
-        eventList (list): A list of events, where each event contains at least:
-            - 'eventType' (str): A string indicating the type of the event (e.g., "GAME:START", "GAME:END").
-            - 'timestamp' (int): A numeric value representing the timestamp of the event.
-
-    Returns:
-        list: A list with the duration of the extracted game sessions in milliseconds.
-
-    Example:
-        >>> events = [
-        ...     {"eventType": "GAME:START", "timestamp": 1000},
-        ...     {"eventType": "LEVEL:START", "timestamp": 2000},
-        ...     {"eventType": "LEVEL:END", "timestamp": 3000},
-        ...     {"eventType": "GAME:END", "timestamp": 4000},
-        ...     {"eventType": "GAME:START", "timestamp": 5000},
-        ...     {"eventType": "GAME:END", "timestamp": 8000},
-        ... ]
-        >>> gameSessionLengths = gameSession(events)
-        >>> print(gameSessionLengths)
-        [3000, 3000]
-    """
-    eventList = sorted(eventList, key=lambda x: x['timestamp'])
-    gameSessionLengthMs = []
-    for currentEvent in eventList:
-        if currentEvent['eventType'] == "GameStart":
-            tsSessionStart = currentEvent['timestamp']
-        if currentEvent['eventType'] == "GameEnd":
-            tsSessionEnd = currentEvent['timestamp']
-            gameSessionLengthMs.append(tsSessionEnd-tsSessionStart)
-    return gameSessionLengthMs    
-
 
 def processEventsWithContext(data):
     """
@@ -117,69 +79,25 @@ def processEventsWithContext(data):
     #levels = []
    # fireActivated=[]
     #hitFire=[]
-    #for game in contextStack[-1].games:
-        #for level in game.levels:
-            #levels.append(dict(levelid=level.id, result = level.levelResult))
-            #deaths.extend(level.deaths)
-            #fire_activations = sum(1 for e in .events if e.type == "FireActivatedEvent")
-            #hit_by_fire=sum(1 for e in game.events if e.type == "TargetHitEvent"and e.Hitter == "Fire")
-            #fireActivated.append(fire_activations)
-            #hitFire.append(hit_by_fire)
-    fireActivated = sum(1 for e in sorted_data if e.get("eventType") == "FireActivatedEvent")
-    hitByFire = sum(1 for e in sorted_data if e.get("eventType") == "TargetHitEvent" and e.get("Hitter") == "Fire")
-    percentajeFire=hitByFire/fireActivated
+    for game in contextStack[-1].games:
+        for level in game.levels:
+            levels.append(dict(levelid=level.id, result = level.levelResult))
+            deaths.extend(level.deaths)
+            fire_activations = sum(1 for e in level.events if e.type == "FireActivatedEvent")
+            hit_by_fire=sum(1 for e in level.events if e.type == "TargetHitEvent"and e.Hitter == "Fire")
+            fireActivated.append(fire_activations)
+            hitFire.append(hit_by_fire)
+        fireActivated = sum(1 for e in sorted_data if e.get("eventType") == "FireActivatedEvent")
+        hitByFire = sum(1 for e in sorted_data if e.get("eventType") == "TargetHitEvent" and e.get("Hitter") == "Fire")
+        percentageFire=hitByFire/fireActivated
 
 
     return {
         "gameSessionLengthMs": gameSessionLengthMs,
-        "percentajeFire":percentajeFire
+        #"percentageFire":percentageFire
         #"deaths": deaths,
         #"levels": levels
     }
-
-def drawHexbinHeatmap(data_list, background_image, output_file, gridsize=(27, 22), extent=[0, 865, 0, 705]):
-    """
-    Draws a hexbin heatmap over a background image using a list of events containing positions and saves it to a file.
-
-    Args:
-        data_list (list): A list of dictionaries containing positions ('x' and 'y' keys) for the heatmap.
-        background_image (str): Path to the background image file.
-        output_file (str): Path to save the generated heatmap image.
-        gridsize (tuple): Number of hexagons in the x and y directions.
-        extent (list): The bounding box of the data (x_min, x_max, y_min, y_max).
-
-    Returns:
-        None
-    """
-    # Convert the list of dictionaries to a DataFrame
-    data = pd.DataFrame(data_list)
-
-    # Scene dimensions: 27x22 tiles = 864x705px
-    fig, ax = plt.subplots(figsize=(27, 22))  # inches
-
-    # Draw the map in the background
-    img = plt.imread(background_image)
-    ax.imshow(img)
-
-    # Draw a transparent heatmap
-    data.plot.hexbin(
-        fig=fig,
-        ax=ax,
-        x="x",
-        y="y",
-        reduce_C_function=sum,
-        gridsize=gridsize,
-        extent=extent,
-        alpha=0.5,
-        cmap='Reds'
-    )
-
-    ax.set_xticks(range(0, extent[1], 100))
-    ax.set_yticks(range(0, extent[3], 100))
-    fig.savefig(output_file)
-    print(f"Aggregated heatmap saved as {output_file}")
-
-
 
 ########################################
 ### MAIN section
@@ -228,8 +146,8 @@ if __name__ == '__main__':
             all_game_session_lengths.extend(results["gameSessionLengthMs"])
             #all_deaths.extend(results["deaths"])
             #all_levels.extend(results["levels"])
-            percentajeFireTotal+=results["percentajeFire"]
-            print(percentajeFireTotal)
+            # percentageFireTotal+=results["percentageFire"]
+            # print(percentageFireTotal)
             
 
             
