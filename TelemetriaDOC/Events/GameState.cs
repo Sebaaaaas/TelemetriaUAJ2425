@@ -17,10 +17,10 @@ namespace TelemetriaDOC
             _res = result; //0 = Success / 1 = Fail / 2 = Quit
         }
 
-        public override string serializeToJSON()
+        public override string SerializeToJSON()
         {
             string s = "{";
-            s += base.serializeToJSON();
+            s += base.SerializeToJSON();
             if(_type == EventType.GameEnd ) {
                 if (_res==ResultType.Sucess)
                 {

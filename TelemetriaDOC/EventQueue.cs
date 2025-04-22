@@ -24,23 +24,19 @@ namespace TelemetriaDOC
         {
             queue.Enqueue(e);
 
-            // Si superamos el máximo de eventos, eliminamos el primero
+            // Si superamos el máximo de eventos, vaciamos la cola
             if (queue.Count >= max_size)
             {                
-                flushQueue();
-                
+                FlushQueue();
             }
-                
-
-
         }
        
-        public void flushQueue()
+        public void FlushQueue()
         {
-            tracker.flush(ref queue);
+            tracker.Flush(ref queue);
         }
 
-        public int getMaxSize() { return max_size; }
+        public int GetMaxSize() { return max_size; }
 
     }
 }

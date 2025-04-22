@@ -11,7 +11,7 @@ namespace TelemetriaDOC
         {
             
         }
-        public string serialize(Event e)
+        public string Serialize(Event e)
         {
             string s = "";
             if (!firstTime)
@@ -23,15 +23,15 @@ namespace TelemetriaDOC
                 s += "[\n";
                 firstTime = false;
             }
-            s += e.serializeToJSON();
+            s += e.SerializeToJSON();
             return s;
             
         }
-        public string getExtension()
+        public string GetExtension()
         {
             return ".json";
         }
-        public string serializerEnding()
+        public string SerializerEnding()
         {
             return "\n]\n";
         }

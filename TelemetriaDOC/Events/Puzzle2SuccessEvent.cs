@@ -12,10 +12,10 @@ namespace TelemetriaDOC.Events
             name = "Puzzle2SuccessEvent";
         }
 
-        public override string serializeToJSON()
+        public override string SerializeToJSON()
         {
             string s = "{";
-            s += base.serializeToJSON();
+            s += base.SerializeToJSON();
             s += "}";
             return s;
         }

@@ -12,10 +12,10 @@ namespace TelemetriaDOC
            // gameID = _gameID;
             name = "Puzzle2StartEvent";
         }
-        public override string serializeToJSON()
+        public override string SerializeToJSON()
         {
             string s = "{";
-            s += base.serializeToJSON();
+            s += base.SerializeToJSON();
             //s += ", \"GameID\" : " + gameID;
             s += "}";
             return s;

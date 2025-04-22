@@ -18,13 +18,13 @@ namespace TelemetriaDOC
             _timestamp = timestamp;
         }
 
-        public virtual string serializeToJSON()
+        public virtual string SerializeToJSON()
         {
             string s = "\"eventType\": \"" + name.ToString() + "\", ";
             s += "\"id\":\"" + _id_session.ToString() + "\", ";
             s += "\"timestamp\":" + _timestamp;
             return s;
         }
-        public void setSessionID(Guid sessionID) { _id_session = sessionID; }
+        public void SetSessionID(Guid sessionID) { _id_session = sessionID; }
     }
 }

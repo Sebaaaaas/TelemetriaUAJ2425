@@ -14,10 +14,10 @@ namespace TelemetriaDOC
             name = _type.ToString();
         }
 
-        public override string serializeToJSON()
+        public override string SerializeToJSON()
         {
             string s = "{";
-            s += base.serializeToJSON();
+            s += base.SerializeToJSON();
             s += "}";
             return s;
         }

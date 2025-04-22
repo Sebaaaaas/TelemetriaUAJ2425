@@ -32,10 +32,10 @@ namespace TelemetriaDOC
             instance = new Tracker();
 
             //Iniciar serializador
-            instance.initSerializer(format);
+            instance.InitSerializer(format);
 
             //Iniciar persistencia
-            instance.initPersistence(type, name);
+            instance.InitPersistence(type, name);
 
             instance.eventQueue = new EventQueue(ref instance, sizeQueue);
 
@@ -44,7 +44,7 @@ namespace TelemetriaDOC
             return true;
         }
 
-        public void initSerializer(Format format)
+        public void InitSerializer(Format format)
         {
             switch (format)
             {
@@ -54,7 +54,7 @@ namespace TelemetriaDOC
             }
         }
 
-        public void initPersistence(Type typeSave, string name)
+        public void InitPersistence(Type typeSave, string name)
         {
             switch (typeSave)
             {
@@ -66,34 +66,34 @@ namespace TelemetriaDOC
 
         public static void TrackEvent(Event e) 
         {
-            e.setSessionID(instance.sessionID);
+            e.SetSessionID(instance.sessionID);
             instance.eventQueue.AddEvent(e);
         }
 
-        public void flush(ref Queue<Event> events)
+        public void Flush(ref Queue<Event> events)
         {
             string text = "";
 
             // Serializamos cada evento de la cola
             while(events.Count > 0)
             {
-                text += instance.serializer.serialize(events.Dequeue());
+                text += instance.serializer.Serialize(events.Dequeue());
             }
 
             events.Clear();
 
-            instance.persistence.write(text);            
+            instance.persistence.Write(text);            
         }
 
-        public static void closing()
+        public static void Closing()
         {
             instance.CloseArch();
         }
         private void CloseArch()
         {
-            instance.eventQueue.flushQueue();
-            instance.persistence.write(instance.serializer.serializerEnding());
-            instance.persistence.close();
+            instance.eventQueue.FlushQueue();
+            instance.persistence.Write(instance.serializer.SerializerEnding());
+            instance.persistence.Close();
         }
     }
 }

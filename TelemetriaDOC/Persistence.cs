@@ -7,8 +7,8 @@ namespace TelemetriaDOC
     public enum Type {Disk}
     public abstract class Persistence
     {
-        public virtual void write(string s) { }
+        public virtual void Write(string s) { }
 
-        public virtual void close() { }
+        public virtual void Close() { }
     }
 }

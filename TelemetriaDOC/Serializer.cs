@@ -7,9 +7,9 @@ namespace TelemetriaDOC
     public enum Format { JSON };
     interface Serializer
     {
-        string serialize(Event e);
-        string getExtension();
+        string Serialize(Event e);
+        string GetExtension();
 
-        string serializerEnding();
+        string SerializerEnding();
     }
 }

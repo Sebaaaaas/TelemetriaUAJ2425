@@ -12,10 +12,10 @@ namespace TelemetriaDOC
             hitterTag = _hitterTag;
             name = "TargetHitEvent";
         }
-        public override string serializeToJSON()
+        public override string SerializeToJSON()
         {
             string s = "{";
-            s += base.serializeToJSON();
+            s += base.SerializeToJSON();
             s += ", ";
             s += "\"Hitter\" : \"" + hitterTag+ "\"";
             s += "}";
