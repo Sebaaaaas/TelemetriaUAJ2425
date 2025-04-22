@@ -80,26 +80,25 @@ def processEventsWithContext(data):
     totalNumHitterFire = 0
     totalNumActivateFire = 0
     percentageFires = []
-
+    totalNumHitterSword = 0
+    totalNumActivateSword = 0
+    percentageSword = []
     triesPuzzle2 = []
    # fireActivated=[]
     #hitFire=[]
     for game in contextStack[-1].games:
-        
         for level in game.levels:
             levels.append(dict(levelid=level.id, result = level.levelResult))
             deaths.extend(level.deaths)
             percentageFires.append(level.percentageFire)
             totalNumHitterFire += level.numHitterFire
             totalNumActivateFire += level.numActivateFire
+            percentageSword.append(level.percentageSword)
+            totalNumHitterSword += level.numHitterSword
+            totalNumActivateSword += level.numActivateSword
             triesPuzzle2.append(level.triesPuzzle2)
-           # fire_activations = sum(1 for e in level.events if e.type == "FireActivatedEvent")
-           # hit_by_fire=sum(1 for e in level.events if e.type == "TargetHitEvent"and e.Hitter == "Fire")
-           # fireActivated.append(fire_activations)
-           # hitFire.append(hit_by_fire)
-        #fireActivated = sum(1 for e in sorted_data if e.get("eventType") == "FireActivatedEvent")
-        #hitByFire = sum(1 for e in sorted_data if e.get("eventType") == "TargetHitEvent" and e.get("Hitter") == "Fire")
-        #percentageFire=hitByFire/fireActivated
+           
+        
 
 
     return {
@@ -110,6 +109,9 @@ def processEventsWithContext(data):
         "percentageFires": percentageFires,
         "totalNumHitterFire": totalNumHitterFire,
         "totalNumActivateFire": totalNumActivateFire,
+        "percentagesSword": percentageSword,
+        "totalNumHitterSword": totalNumHitterSword,
+        "totalNumActivateSword": totalNumActivateSword,
         "triesPuzzle2":triesPuzzle2
     }
 
@@ -139,6 +141,8 @@ if __name__ == '__main__':
     all_levels = []
     globalHitterFire = 0
     globalActivateFire = 0
+    globalHitterSword = 0
+    globalActivateSword = 0
     all_triesPuzzle2= []
 
     # Iterate over all files in the folder
@@ -167,6 +171,11 @@ if __name__ == '__main__':
             #Para calculos globales
             globalHitterFire += results["totalNumHitterFire"]
             globalActivateFire += results["totalNumActivateFire"]
+             #Lista de porcentajes de la espada por partida
+            percentageSwordAll = results["percentagesSword"]
+            #Para calculos globales
+            globalHitterSword += results["totalNumHitterSword"]
+            globalActivateSword += results["totalNumActivateSword"]
             all_triesPuzzle2.extend(results["triesPuzzle2"])
             # print(percentageFireTotal)
             
@@ -185,14 +194,24 @@ if __name__ == '__main__':
         percentageFireGlobal = 0
 
     print(f"Porcentaje global de fuego (Hit/Activated): {percentageFireGlobal}%")
-
     print("\nAggregated Fire Percentage Statistics:")
     print(s2.describe())
 
-    s3 = pd.Series(all_triesPuzzle2)
+    s3 = pd.Series(percentageSwordAll)
+    print("Lista de porcentajes de golpes que da el jugador a la diana con respecto al número de golpes totales:"+ str(percentageSwordAll))
+    if globalActivateSword > 0:
+        percentageSwordGlobal = (globalHitterSword / globalActivateSword) * 100
+    else:
+        percentageSwordGlobal = 0
+
+    print(f"Porcentaje global de golpes del jugador (Hit/Activated): {percentageSwordGlobal}%")
+    print("\nAggregated Sword Percentage Statistics:")
+    print(s3.describe())
+
+    s4 = pd.Series(all_triesPuzzle2)
     print("Lista de intentos del puzzle 2 por partida:"+ str(all_triesPuzzle2))
     print("\nAggregated Tries Puzzle 2 Statistics:")
-    print(s3.describe())
+    print(s4.describe())
 
 
     # # Create a DataFrame for all deaths and generate a heatmap
