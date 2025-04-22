@@ -84,6 +84,7 @@ def processEventsWithContext(data):
     totalNumActivateSword = 0
     percentageSword = []
     triesPuzzle2 = []
+    puzzle1Times = []
    # fireActivated=[]
     #hitFire=[]
     for game in contextStack[-1].games:
@@ -97,6 +98,7 @@ def processEventsWithContext(data):
             totalNumHitterSword += level.numHitterSword
             totalNumActivateSword += level.numActivateSword
             triesPuzzle2.append(level.triesPuzzle2)
+            puzzle1Times.append(level.puzzle1Time)
            
         
 
@@ -113,6 +115,7 @@ def processEventsWithContext(data):
         "totalNumHitterSword": totalNumHitterSword,
         "totalNumActivateSword": totalNumActivateSword,
         "triesPuzzle2":triesPuzzle2
+        "puzzle1Times":puzzle1Times
     }
 
 ########################################
@@ -144,6 +147,7 @@ if __name__ == '__main__':
     globalHitterSword = 0
     globalActivateSword = 0
     all_triesPuzzle2= []
+    puzzle1Times = []
 
     # Iterate over all files in the folder
     for file_name in os.listdir(folder_path):
@@ -177,6 +181,7 @@ if __name__ == '__main__':
             globalHitterSword += results["totalNumHitterSword"]
             globalActivateSword += results["totalNumActivateSword"]
             all_triesPuzzle2.extend(results["triesPuzzle2"])
+            puzzle1Times.extend(results["puzzle1Times"])
             # print(percentageFireTotal)
             
 
@@ -212,6 +217,11 @@ if __name__ == '__main__':
     print("Lista de intentos del puzzle 2 por partida:"+ str(all_triesPuzzle2))
     print("\nAggregated Tries Puzzle 2 Statistics:")
     print(s4.describe())
+
+    s5 = pd.Series(puzzle1Times)
+    print("Lista de tiempos en completar puzle 1:"+ str(puzzle1Times))
+    print("\nAggregated Times Puzzle 1 Statistics:")
+    print(s5.describe())
 
 
     # # Create a DataFrame for all deaths and generate a heatmap

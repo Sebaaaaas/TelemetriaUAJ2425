@@ -113,6 +113,7 @@ class SessionContextData(ContextData):
 
 
 class GameContextData(ContextData):
+
     """It stores information about level events:
     - When the level starts and ends and its lenght
     - The event result
@@ -135,7 +136,9 @@ class GameContextData(ContextData):
         self.numActivateSword = 0
         self.percentageSword = 0
         self.deaths = []    
-        self.games = []
+        self.puzzle1Start = 0
+        self.puzzle1End = 0
+        self.puzzle1Time = 0        
         
 
     def parseEvent(self, event) -> bool:
@@ -171,6 +174,11 @@ class GameContextData(ContextData):
             self.numActivateSword+=1
         elif(event['eventType']== "Puzzle2ResetEvent" or event['eventType']=='Puzzle2SuccessEvent'):
             self.triesPuzzle2+=1
+        elif(event['eventType']== "Puzzle1StartEvent"):
+            self.puzzle1Start=event['timestamp']
+        elif(event['eventType']== "Puzzle1EndEvent"):
+            self.puzzle1Time=event['timestamp']-self.puzzle1Start
+            self.puzzle1End += 1
 
     
         return True
