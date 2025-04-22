@@ -138,7 +138,9 @@ class GameContextData(ContextData):
         self.deaths = []    
         self.puzzle1Start = 0
         self.puzzle1End = 0
-        self.puzzle1Time = 0        
+        self.puzzle1Time = None
+        self.puzzle2Start = None
+        self.puzzle2Time = None        
         
 
     def parseEvent(self, event) -> bool:
@@ -179,6 +181,10 @@ class GameContextData(ContextData):
         elif(event['eventType']== "Puzzle1EndEvent"):
             self.puzzle1Time=event['timestamp']-self.puzzle1Start
             self.puzzle1End += 1
+        elif(event['eventType']== "Puzzle2StartEvent"):
+            self.puzzle2Start=event['timestamp']
+        elif(event['eventType']== "Puzzle2EndEvent"):
+            self.puzzle2Time=event['timestamp']-self.puzzle2Start
 
     
         return True

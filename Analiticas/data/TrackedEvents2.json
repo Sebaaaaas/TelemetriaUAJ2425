@@ -1,0 +1,37 @@
+[
+{"eventType": "SessionStart", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":2.290596},
+{"eventType": "GameStart", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":2.290969},
+{"eventType": "Puzzle1StartEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":2.607914},
+{"eventType": "FireActivatedEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":9.967512},
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":12.98839, "Hitter" : "Fire"},
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":13.08612, "Hitter" : "Fire"},
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":13.12631, "Hitter" : "Fire"},
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":13.16749, "Hitter" : "Fire"},
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":13.18775, "Hitter" : "Fire"},
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":13.28847, "Hitter" : "Fire"},
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":13.40763, "Hitter" : "Fire"},
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":13.50984, "Hitter" : "Fire"},
+{"eventType": "Puzzle1EndEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":16.38861},
+{"eventType": "Puzzle2StartEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":16.38866},
+{"eventType": "Puzzle2SuccessEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":23.88662},
+{"eventType": "Puzzle2EndEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":23.88676},
+{"eventType": "GameEnd", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"0", "timestamp":39.04668, "RESULT": "SUCCESS"},
+{"eventType": "GameStart", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"1", "timestamp":39.93584},
+{"eventType": "Puzzle1StartEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"1", "timestamp":39.93586},
+{"eventType": "FireActivatedEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"1", "timestamp":46.74729}
+,
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"1", "timestamp":49.70761, "Hitter" : "Fire"},
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"1", "timestamp":49.82854, "Hitter" : "Fire"},
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"1", "timestamp":49.84863, "Hitter" : "Fire"},
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"1", "timestamp":49.88746, "Hitter" : "Fire"},
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"1", "timestamp":49.90897, "Hitter" : "Fire"},
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"1", "timestamp":50.00611, "Hitter" : "Fire"},
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"1", "timestamp":50.12684, "Hitter" : "Fire"},
+{"eventType": "TargetHitEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"1", "timestamp":50.22699, "Hitter" : "Fire"},
+{"eventType": "Puzzle1EndEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"1", "timestamp":53.24594},
+{"eventType": "Puzzle2StartEvent", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"1", "timestamp":53.24595},
+{"eventType": "GameEnd", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"1", "timestamp":54.85596, "RESULT": "QUIT"},
+{"eventType": "SessionEnd", "sessionID":"b9f2ce17-248f-4d74-98e0-68a98a9fd5ce", "gameID":"1", "timestamp":54.85598}
+
+]
+
