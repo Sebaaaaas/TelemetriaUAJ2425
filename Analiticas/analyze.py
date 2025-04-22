@@ -75,28 +75,32 @@ def processEventsWithContext(data):
     gameSessionLengthMs = [game.gameSessionLengthMs for game in contextStack[-1].games]
 
     # Store all deaths in a list.
-    #deaths = []
-    #levels = []
+    deaths = []
+    levels = []
+    percentageFires = []
    # fireActivated=[]
     #hitFire=[]
     for game in contextStack[-1].games:
+        
         for level in game.levels:
             levels.append(dict(levelid=level.id, result = level.levelResult))
             deaths.extend(level.deaths)
-            fire_activations = sum(1 for e in level.events if e.type == "FireActivatedEvent")
-            hit_by_fire=sum(1 for e in level.events if e.type == "TargetHitEvent"and e.Hitter == "Fire")
-            fireActivated.append(fire_activations)
-            hitFire.append(hit_by_fire)
-        fireActivated = sum(1 for e in sorted_data if e.get("eventType") == "FireActivatedEvent")
-        hitByFire = sum(1 for e in sorted_data if e.get("eventType") == "TargetHitEvent" and e.get("Hitter") == "Fire")
-        percentageFire=hitByFire/fireActivated
+            percentageFires.append(level.percentageFire)
+           # fire_activations = sum(1 for e in level.events if e.type == "FireActivatedEvent")
+           # hit_by_fire=sum(1 for e in level.events if e.type == "TargetHitEvent"and e.Hitter == "Fire")
+           # fireActivated.append(fire_activations)
+           # hitFire.append(hit_by_fire)
+        #fireActivated = sum(1 for e in sorted_data if e.get("eventType") == "FireActivatedEvent")
+        #hitByFire = sum(1 for e in sorted_data if e.get("eventType") == "TargetHitEvent" and e.get("Hitter") == "Fire")
+        #percentageFire=hitByFire/fireActivated
 
 
     return {
         "gameSessionLengthMs": gameSessionLengthMs,
         #"percentageFire":percentageFire
-        #"deaths": deaths,
-        #"levels": levels
+        "deaths": deaths,
+        "levels": levels,
+        "percentageFires": percentageFires
     }
 
 ########################################
@@ -121,7 +125,6 @@ if __name__ == '__main__':
     """
     # Initialize lists to aggregate results
     all_game_session_lengths = []
-    percentajeFireTotal=0
     all_deaths = []
     all_levels = []
 
@@ -144,9 +147,9 @@ if __name__ == '__main__':
 
             # Aggregate results
             all_game_session_lengths.extend(results["gameSessionLengthMs"])
-            #all_deaths.extend(results["deaths"])
-            #all_levels.extend(results["levels"])
-            # percentageFireTotal+=results["percentageFire"]
+            all_deaths.extend(results["deaths"])
+            all_levels.extend(results["levels"])
+            percentageFiresAll = results["percentageFires"]
             # print(percentageFireTotal)
             
 
@@ -155,6 +158,11 @@ if __name__ == '__main__':
     s = pd.Series(all_game_session_lengths)
     print("Aggregated Game Session Length Statistics:")
     print(s.describe())
+
+    s2 = pd.Series(percentageFiresAll)
+    print("Lista de porcentajes de fuego da a la diana con respecto a fuego activado:"+ str(percentageFiresAll))
+    print("\nAggregated Fire Percentage Statistics:")
+    print(s2.describe())
 
     # # Create a DataFrame for all deaths and generate a heatmap
     # dfDeaths = pd.DataFrame(all_deaths)

@@ -59,6 +59,7 @@ class RootContextData(ContextData):
     def parseEvent(self, event) -> bool:
         """Creates a new Session context on GAME:START event
         """
+        
         if event['eventType'] == "SessionStart":
            self.contextStack.append(SessionContextData(self.contextStack, self))
            # The event is not consumed because it will be used by the game context
@@ -85,11 +86,13 @@ class SessionContextData(ContextData):
         self.tsGameEnd = None
         self.gameSessionLengthMs = 0
         self.games = []
+        self.levels = [] 
 
     def parseEvent(self, event) -> bool:
         """It stores information on GAME:START and GAME:END events.
         It also creates a GameContext when a level starts
         """
+       
         if event['eventType'] == "GameStart":
            # Create a level context and don't consume the event
            self.contextStack.append(GameContextData(self.contextStack, self))
@@ -123,22 +126,33 @@ class GameContextData(ContextData):
         self.tsLevelEnd = None
         self.levelLengthMs = 0
         self.levelResult = None    
+        self.numHitterFire = 0
+        self.numActivateFire = 0
+        self.percentageFire = 0
         self.deaths = []    
         self.games = []
+        
 
     def parseEvent(self, event) -> bool:
         """It stores data on LEVEL:START and LEVEL:END
         Additionally, it stores death positions in PLAYER:DEATH events
         """
-        if event['eventType'] == "LevelStart":
-            self.id = event["levelId"]
-            self.tsLevelStart = event['timestamp']       
-        elif (event['eventType'] == "LevelEnd"): #and (self.id == event["levelId"]):
-            self.tsLevelEnd = event['timestamp'] 
-            self.levelLengthMs = self.tsLevelEnd - self.tsLevelStart
-            self.levelResult = event["result"]
-            self.popContext()
-        elif (event['eventType'] == "TargetHitEvent"):
-            self.deaths.append( dict( hitter=event['Hitter']))
+        if event['eventType'] == "GameStart":
+       #     self.id = event["levelId"]
+             self.tsLevelStart = event['timestamp']       
+        elif (event['eventType'] == "GameEnd"): #and (self.id == event["levelId"]):
+           self.tsLevelEnd = event['timestamp'] 
+           self.levelLengthMs = self.tsLevelEnd - self.tsLevelStart
+          # self.levelResult = event["result"]
+           if self.numActivateFire > 0:
+                self.percentageFire = (self.numHitterFire / self.numActivateFire) * 100
+           else:
+                self.percentageFire = 0
+           self.popContext()
+
+        elif (event['eventType'] == "TargetHitEvent" and event['Hitter']=='Fire'):
+            self.numHitterFire+=1
+        elif(event['eventType'] == "FireActivatedEvent"):
+            self.numActivateFire+=1
     
         return True
