@@ -132,8 +132,11 @@ class GameContextData(ContextData):
         self.percentageFire = 0
         self.triesPuzzle2 = 0
         self.deaths = []    
-        self.games = []
-        
+        self.puzzle1StartEv = 0
+        self.puzzle1EndEv = 0
+        self.puzzle2StartEv = 0
+        self.puzzle2EndEv = 0
+
 
     def parseEvent(self, event) -> bool:
         """Eventos por partida"""
@@ -151,6 +154,7 @@ class GameContextData(ContextData):
                 self.percentageFire = (self.numHitterFire / self.numActivateFire) * 100
            else:
                 self.percentageFire = 0
+            
            self.popContext()
 
         elif (event['eventType'] == "TargetHitEvent" and event['Hitter']=='Fire'):
@@ -159,6 +163,14 @@ class GameContextData(ContextData):
             self.numActivateFire+=1
         elif(event['eventType']== "Puzzle2ResetEvent" or event['eventType']=='Puzzle2SuccessEvent'):
             self.triesPuzzle2+=1
+        elif(event['eventType']== "Puzzle1StartEvent"):
+            self.puzzle1StartEv+=1
+        elif(event['eventType']== "Puzzle1EndEvent"):
+            self.puzzle1EndEv+=1
+        elif(event['eventType']== "Puzzle2StartEvent"):
+            self.puzzle2StartEv+=1
+        elif(event['eventType']== "Puzzle2EndEvent"):
+            self.puzzle2EndEv+=1
 
     
         return True

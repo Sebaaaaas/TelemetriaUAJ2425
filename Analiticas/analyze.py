@@ -80,8 +80,12 @@ def processEventsWithContext(data):
     totalNumHitterFire = 0
     totalNumActivateFire = 0
     percentageFires = []
-
     triesPuzzle2 = []
+    puzzle1StartEv = 0
+    puzzle1EndEv = 0
+    puzzle2StartEv = 0
+    puzzle2EndEv = 0
+
    # fireActivated=[]
     #hitFire=[]
     for game in contextStack[-1].games:
@@ -93,6 +97,11 @@ def processEventsWithContext(data):
             totalNumHitterFire += level.numHitterFire
             totalNumActivateFire += level.numActivateFire
             triesPuzzle2.append(level.triesPuzzle2)
+            puzzle1StartEv += level.puzzle1StartEv
+            puzzle1EndEv += level.puzzle1EndEv
+            puzzle2StartEv += level.puzzle2StartEv
+            puzzle2EndEv += level.puzzle2EndEv
+
            # fire_activations = sum(1 for e in level.events if e.type == "FireActivatedEvent")
            # hit_by_fire=sum(1 for e in level.events if e.type == "TargetHitEvent"and e.Hitter == "Fire")
            # fireActivated.append(fire_activations)
@@ -110,7 +119,11 @@ def processEventsWithContext(data):
         "percentageFires": percentageFires,
         "totalNumHitterFire": totalNumHitterFire,
         "totalNumActivateFire": totalNumActivateFire,
-        "triesPuzzle2":triesPuzzle2
+        "triesPuzzle2":triesPuzzle2,
+        "puzzle1StartEv":puzzle1StartEv,
+        "puzzle1EndEv":puzzle1EndEv,
+        "puzzle2StartEv":puzzle2StartEv,
+        "puzzle2EndEv":puzzle2EndEv
     }
 
 ########################################
@@ -140,6 +153,10 @@ if __name__ == '__main__':
     globalHitterFire = 0
     globalActivateFire = 0
     all_triesPuzzle2= []
+    puzzle1Start = 0
+    puzzle1End = 0
+    puzzle2Start = 0
+    puzzle2End = 0
 
     # Iterate over all files in the folder
     for file_name in os.listdir(folder_path):
@@ -168,6 +185,12 @@ if __name__ == '__main__':
             globalHitterFire += results["totalNumHitterFire"]
             globalActivateFire += results["totalNumActivateFire"]
             all_triesPuzzle2.extend(results["triesPuzzle2"])
+            #para porcentaje de abandono
+            puzzle1Start = results["puzzle1StartEv"]
+            puzzle1End = results["puzzle1EndEv"]
+            puzzle2Start = results["puzzle2StartEv"]
+            puzzle2End = results["puzzle2EndEv"]
+
             # print(percentageFireTotal)
             
 
@@ -177,8 +200,32 @@ if __name__ == '__main__':
     print("Aggregated Game Session Length Statistics:")
     print(s.describe())
 
+
+    #calculo abandonos puzle 1
+    num_abandonos1 = puzzle1Start - puzzle1End
+    print(f"\nAbandonos nivel 1: {num_abandonos1}")
+
+    if puzzle1Start > 0:
+        porcentaje_abandono = (num_abandonos1 / puzzle1Start) * 100
+    else:
+        porcentaje_abandono = 0
+
+    print(f"Porcentaje de abandono del nivel 1: {porcentaje_abandono:.2f}%")
+    print(puzzle1Start , puzzle1End)
+    #calculo abandonos puzle 2
+    num_abandonos2 = puzzle2Start - puzzle2End
+    print(f"\nAbandonos nivel 2: {num_abandonos2}")
+    
+    if puzzle2Start > 0:
+        porcentaje_abandono = (num_abandonos2 / puzzle2Start) * 100
+    else:
+        porcentaje_abandono = 0
+
+    print(f"Porcentaje de abandono del nivel 2: {porcentaje_abandono:.2f}%")
+    print(puzzle2Start , puzzle2End)
+
     s2 = pd.Series(percentageFiresAll)
-    print("Lista de porcentajes de fuego da a la diana con respecto a fuego activado:"+ str(percentageFiresAll))
+    print("\nLista de porcentajes de fuego da a la diana con respecto a fuego activado:"+ str(percentageFiresAll))
     if globalActivateFire > 0:
         percentageFireGlobal = (globalHitterFire / globalActivateFire) * 100
     else:
