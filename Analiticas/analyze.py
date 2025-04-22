@@ -75,14 +75,11 @@ def processEventsWithContext(data):
     gameSessionLengthMs = [game.gameSessionLengthMs for game in contextStack[-1].games]
 
     # Store all deaths in a list.
-    deaths = []
     levels = []
     totalNumHitterFire = 0
     totalNumActivateFire = 0
-    percentageFires = []
     totalNumHitterSword = 0
     totalNumActivateSword = 0
-    percentageSword = []
     triesPuzzle2 = []
     puzzle1Times = []
     puzzle2Times = []
@@ -91,11 +88,8 @@ def processEventsWithContext(data):
     for game in contextStack[-1].games:
         for level in game.levels:
             levels.append(dict(levelid=level.id, result = level.levelResult))
-            deaths.extend(level.deaths)
-            percentageFires.append(level.percentageFire)
             totalNumHitterFire += level.numHitterFire
             totalNumActivateFire += level.numActivateFire
-            percentageSword.append(level.percentageSword)
             totalNumHitterSword += level.numHitterSword
             totalNumActivateSword += level.numActivateSword
             triesPuzzle2.append(level.triesPuzzle2)
@@ -107,13 +101,9 @@ def processEventsWithContext(data):
 
     return {
         "gameSessionLengthMs": gameSessionLengthMs,
-        #"percentageFire":percentageFire
-        "deaths": deaths,
         "levels": levels,
-        "percentageFires": percentageFires,
         "totalNumHitterFire": totalNumHitterFire,
         "totalNumActivateFire": totalNumActivateFire,
-        "percentagesSword": percentageSword,
         "totalNumHitterSword": totalNumHitterSword,
         "totalNumActivateSword": totalNumActivateSword,
         "triesPuzzle2":triesPuzzle2,
@@ -143,7 +133,6 @@ if __name__ == '__main__':
     """
     # Initialize lists to aggregate results
     all_game_session_lengths = []
-    all_deaths = []
     all_levels = []
     globalHitterFire = 0
     globalActivateFire = 0
@@ -172,15 +161,12 @@ if __name__ == '__main__':
 
             # Aggregate results
             all_game_session_lengths.extend(results["gameSessionLengthMs"])
-            all_deaths.extend(results["deaths"])
             all_levels.extend(results["levels"])
-            #Lista de porcentajes del fuego por partida
-            percentageFiresAll = results["percentageFires"]
+
             #Para calculos globales
             globalHitterFire += results["totalNumHitterFire"]
             globalActivateFire += results["totalNumActivateFire"]
-             #Lista de porcentajes de la espada por partida
-            percentageSwordAll = results["percentagesSword"]
+
             #Para calculos globales
             globalHitterSword += results["totalNumHitterSword"]
             globalActivateSword += results["totalNumActivateSword"]
@@ -196,27 +182,22 @@ if __name__ == '__main__':
     print("Aggregated Game Session Length Statistics:")
     print(s.describe())
 
-    s2 = pd.Series(percentageFiresAll)
-    print("Lista de porcentajes de fuego da a la diana con respecto a fuego activado:"+ str(percentageFiresAll))
     if globalActivateFire > 0:
         percentageFireGlobal = (globalHitterFire / globalActivateFire) * 100
     else:
         percentageFireGlobal = 0
 
-    print(f"Porcentaje global de fuego (Hit/Activated): {percentageFireGlobal}%")
-    print("\nAggregated Fire Percentage Statistics:")
-    print(s2.describe())
+    print(f"\nPorcentaje global de fuego (Hit/Activated): {percentageFireGlobal}%\n")
 
-    s3 = pd.Series(percentageSwordAll)
-    print("Lista de porcentajes de golpes que da el jugador a la diana con respecto al número de golpes totales:"+ str(percentageSwordAll))
+
+
     if globalActivateSword > 0:
         percentageSwordGlobal = (globalHitterSword / globalActivateSword) * 100
     else:
         percentageSwordGlobal = 0
 
-    print(f"Porcentaje global de golpes del jugador (Hit/Activated): {percentageSwordGlobal}%")
-    print("\nAggregated Sword Percentage Statistics:")
-    print(s3.describe())
+    print(f"\nPorcentaje global de golpes del jugador (Hit/Activated): {percentageSwordGlobal}%\n")
+
 
     s4 = pd.Series(all_triesPuzzle2)
     print("Lista de intentos del puzzle 2 por partida:"+ str(all_triesPuzzle2))

@@ -130,12 +130,9 @@ class GameContextData(ContextData):
         self.levelResult = None    
         self.numHitterFire = 0
         self.numActivateFire = 0
-        self.percentageFire = 0
         self.triesPuzzle2 = 0
         self.numHitterSword = 0
         self.numActivateSword = 0
-        self.percentageSword = 0
-        self.deaths = []    
         self.puzzle1Start = 0
         self.puzzle1End = 0
         self.puzzle1Time = None
@@ -154,16 +151,6 @@ class GameContextData(ContextData):
         elif (event['eventType'] == "GameEnd"): #and (self.id == event["levelId"]):
            self.tsLevelEnd = event['timestamp'] 
            self.levelLengthMs = self.tsLevelEnd - self.tsLevelStart
-          # self.levelResult = event["result"]
-           if self.numActivateFire > 0:
-                self.percentageFire = (self.numHitterFire / self.numActivateFire) * 100
-           else:
-                self.percentageFire = 0
-
-           if self.numActivateSword > 0:
-                self.percentageSword = (self.numHitterSword / self.numActivateSword) * 100
-           else:
-                self.percentageSword = 0
            self.popContext()
 
         elif (event['eventType'] == "TargetHitEvent" and event['Hitter']=='Fire'):
