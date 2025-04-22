@@ -130,6 +130,7 @@ class GameContextData(ContextData):
         self.numHitterFire = 0
         self.numActivateFire = 0
         self.percentageFire = 0
+        self.triesPuzzle2 = 0
         self.deaths = []    
         self.games = []
         
@@ -156,5 +157,8 @@ class GameContextData(ContextData):
             self.numHitterFire+=1
         elif(event['eventType'] == "FireActivatedEvent"):
             self.numActivateFire+=1
+        elif(event['eventType']== "Puzzle2ResetEvent" or event['eventType']=='Puzzle2SuccessEvent'):
+            self.triesPuzzle2+=1
+
     
         return True

@@ -80,6 +80,8 @@ def processEventsWithContext(data):
     totalNumHitterFire = 0
     totalNumActivateFire = 0
     percentageFires = []
+
+    triesPuzzle2 = []
    # fireActivated=[]
     #hitFire=[]
     for game in contextStack[-1].games:
@@ -90,6 +92,7 @@ def processEventsWithContext(data):
             percentageFires.append(level.percentageFire)
             totalNumHitterFire += level.numHitterFire
             totalNumActivateFire += level.numActivateFire
+            triesPuzzle2.append(level.triesPuzzle2)
            # fire_activations = sum(1 for e in level.events if e.type == "FireActivatedEvent")
            # hit_by_fire=sum(1 for e in level.events if e.type == "TargetHitEvent"and e.Hitter == "Fire")
            # fireActivated.append(fire_activations)
@@ -106,7 +109,8 @@ def processEventsWithContext(data):
         "levels": levels,
         "percentageFires": percentageFires,
         "totalNumHitterFire": totalNumHitterFire,
-        "totalNumActivateFire": totalNumActivateFire
+        "totalNumActivateFire": totalNumActivateFire,
+        "triesPuzzle2":triesPuzzle2
     }
 
 ########################################
@@ -135,6 +139,7 @@ if __name__ == '__main__':
     all_levels = []
     globalHitterFire = 0
     globalActivateFire = 0
+    all_triesPuzzle2= []
 
     # Iterate over all files in the folder
     for file_name in os.listdir(folder_path):
@@ -157,9 +162,12 @@ if __name__ == '__main__':
             all_game_session_lengths.extend(results["gameSessionLengthMs"])
             all_deaths.extend(results["deaths"])
             all_levels.extend(results["levels"])
+            #Lista de porcentajes del fuego por partida
             percentageFiresAll = results["percentageFires"]
+            #Para calculos globales
             globalHitterFire += results["totalNumHitterFire"]
             globalActivateFire += results["totalNumActivateFire"]
+            all_triesPuzzle2.extend(results["triesPuzzle2"])
             # print(percentageFireTotal)
             
 
@@ -180,6 +188,12 @@ if __name__ == '__main__':
 
     print("\nAggregated Fire Percentage Statistics:")
     print(s2.describe())
+
+    s3 = pd.Series(all_triesPuzzle2)
+    print("Lista de intentos del puzzle 2 por partida:"+ str(all_triesPuzzle2))
+    print("\nAggregated Tries Puzzle 2 Statistics:")
+    print(s3.describe())
+
 
     # # Create a DataFrame for all deaths and generate a heatmap
     # dfDeaths = pd.DataFrame(all_deaths)
