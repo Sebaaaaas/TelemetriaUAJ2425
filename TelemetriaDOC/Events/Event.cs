@@ -10,6 +10,7 @@ namespace TelemetriaDOC
         protected string name;
         
         private Guid _id_session;
+        private int _id_game;
         private float _timestamp;
 
         public Event(float timestamp)
@@ -21,10 +22,12 @@ namespace TelemetriaDOC
         public virtual string SerializeToJSON()
         {
             string s = "\"eventType\": \"" + name.ToString() + "\", ";
-            s += "\"id\":\"" + _id_session.ToString() + "\", ";
+            s += "\"sessionID\":\"" + _id_session.ToString() + "\", ";
+            s += "\"gameID\":\"" + _id_game.ToString() + "\", ";
             s += "\"timestamp\":" + _timestamp;
             return s;
         }
         public void SetSessionID(Guid sessionID) { _id_session = sessionID; }
+        public void SetGameID(int gameID) { _id_game = gameID; }
     }
 }

@@ -130,12 +130,9 @@ class GameContextData(ContextData):
         self.levelResult = None    
         self.numHitterFire = 0
         self.numActivateFire = 0
-        self.percentageFire = 0
         self.triesPuzzle2 = 0
         self.numHitterSword = 0
         self.numActivateSword = 0
-        self.percentageSword = 0
-        self.deaths = []    
         self.puzzle1Start = 0
         self.puzzle1End = 0
         self.puzzle1Time = 0        
@@ -144,6 +141,10 @@ class GameContextData(ContextData):
         self.puzzle2StartEv = 0
         self.puzzle2EndEv = 0
 
+        self.puzzle1Time = None
+        self.puzzle2Start = None
+        self.puzzle2Time = None        
+        
 
     def parseEvent(self, event) -> bool:
         """Eventos por partida"""
@@ -151,8 +152,8 @@ class GameContextData(ContextData):
         Additionally, it stores death positions in PLAYER:DEATH events
         """
         if event['eventType'] == "GameStart":
-       #     self.id = event["levelId"]
-             self.tsLevelStart = event['timestamp']       
+            self.id = event["gameID"]
+            self.tsLevelStart = event['timestamp']       
         elif (event['eventType'] == "GameEnd"): #and (self.id == event["levelId"]):
            self.tsLevelEnd = event['timestamp'] 
            self.levelLengthMs = self.tsLevelEnd - self.tsLevelStart
@@ -189,8 +190,11 @@ class GameContextData(ContextData):
             self.puzzle1EndEv+=1
         elif(event['eventType']== "Puzzle2StartEvent"):
             self.puzzle2StartEv+=1
+            self.puzzle2Start=event['timestamp']
         elif(event['eventType']== "Puzzle2EndEvent"):
             self.puzzle2EndEv+=1
+        elif(event['eventType']== "Puzzle2EndEvent"):
+            self.puzzle2Time=event['timestamp']-self.puzzle2Start
 
     
         return True

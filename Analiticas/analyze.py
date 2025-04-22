@@ -85,7 +85,7 @@ def processEventsWithContext(data):
     percentageSword = []
     triesPuzzle2 = []
     puzzle1Times = []
-    triesPuzzle2 = []
+
     puzzle1StartEv = 0
     puzzle1EndEv = 0
     puzzle2StartEv = 0
@@ -105,7 +105,8 @@ def processEventsWithContext(data):
             totalNumActivateSword += level.numActivateSword
             triesPuzzle2.append(level.triesPuzzle2)
             puzzle1Times.append(level.puzzle1Time)
-               
+           
+        
             puzzle1StartEv += level.puzzle1StartEv
             puzzle1EndEv += level.puzzle1EndEv
             puzzle2StartEv += level.puzzle2StartEv
