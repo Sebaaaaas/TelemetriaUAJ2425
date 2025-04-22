@@ -77,6 +77,8 @@ def processEventsWithContext(data):
     # Store all deaths in a list.
     deaths = []
     levels = []
+    totalNumHitterFire = 0
+    totalNumActivateFire = 0
     percentageFires = []
    # fireActivated=[]
     #hitFire=[]
@@ -86,6 +88,8 @@ def processEventsWithContext(data):
             levels.append(dict(levelid=level.id, result = level.levelResult))
             deaths.extend(level.deaths)
             percentageFires.append(level.percentageFire)
+            totalNumHitterFire += level.numHitterFire
+            totalNumActivateFire += level.numActivateFire
            # fire_activations = sum(1 for e in level.events if e.type == "FireActivatedEvent")
            # hit_by_fire=sum(1 for e in level.events if e.type == "TargetHitEvent"and e.Hitter == "Fire")
            # fireActivated.append(fire_activations)
@@ -100,7 +104,9 @@ def processEventsWithContext(data):
         #"percentageFire":percentageFire
         "deaths": deaths,
         "levels": levels,
-        "percentageFires": percentageFires
+        "percentageFires": percentageFires,
+        "totalNumHitterFire": totalNumHitterFire,
+        "totalNumActivateFire": totalNumActivateFire
     }
 
 ########################################
@@ -127,6 +133,8 @@ if __name__ == '__main__':
     all_game_session_lengths = []
     all_deaths = []
     all_levels = []
+    globalHitterFire = 0
+    globalActivateFire = 0
 
     # Iterate over all files in the folder
     for file_name in os.listdir(folder_path):
@@ -150,6 +158,8 @@ if __name__ == '__main__':
             all_deaths.extend(results["deaths"])
             all_levels.extend(results["levels"])
             percentageFiresAll = results["percentageFires"]
+            globalHitterFire += results["totalNumHitterFire"]
+            globalActivateFire += results["totalNumActivateFire"]
             # print(percentageFireTotal)
             
 
@@ -161,6 +171,13 @@ if __name__ == '__main__':
 
     s2 = pd.Series(percentageFiresAll)
     print("Lista de porcentajes de fuego da a la diana con respecto a fuego activado:"+ str(percentageFiresAll))
+    if globalActivateFire > 0:
+        percentageFireGlobal = (globalHitterFire / globalActivateFire) * 100
+    else:
+        percentageFireGlobal = 0
+
+    print(f"Porcentaje global de fuego (Hit/Activated): {percentageFireGlobal}%")
+
     print("\nAggregated Fire Percentage Statistics:")
     print(s2.describe())
 

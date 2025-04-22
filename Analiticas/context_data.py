@@ -73,6 +73,7 @@ class RootContextData(ContextData):
 
 
 class SessionContextData(ContextData):
+    """Eventos por sesion"""
     """Represents a game session (when the user starts a new game until wins or fails)
     It stores when a game starts and finishes, its length and the information 
     extracted from the levels played during the game session
@@ -134,6 +135,7 @@ class GameContextData(ContextData):
         
 
     def parseEvent(self, event) -> bool:
+        """Eventos por partida"""
         """It stores data on LEVEL:START and LEVEL:END
         Additionally, it stores death positions in PLAYER:DEATH events
         """
