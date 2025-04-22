@@ -114,7 +114,7 @@ def processEventsWithContext(data):
         "percentagesSword": percentageSword,
         "totalNumHitterSword": totalNumHitterSword,
         "totalNumActivateSword": totalNumActivateSword,
-        "triesPuzzle2":triesPuzzle2
+        "triesPuzzle2":triesPuzzle2,
         "puzzle1Times":puzzle1Times
     }
 

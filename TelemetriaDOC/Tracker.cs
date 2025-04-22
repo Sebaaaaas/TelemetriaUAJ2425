@@ -12,6 +12,8 @@ namespace TelemetriaDOC
         private EventQueue eventQueue;
 
         private Guid sessionID;
+        private int gameID;
+        private bool isFirstGame;
 
         private Tracker()
         {
@@ -40,6 +42,8 @@ namespace TelemetriaDOC
             instance.eventQueue = new EventQueue(ref instance, sizeQueue);
 
             instance.sessionID = Guid.NewGuid();
+            instance.gameID = 0;
+            instance.isFirstGame = true;
 
             return true;
         }
@@ -67,6 +71,17 @@ namespace TelemetriaDOC
         public static void TrackEvent(Event e) 
         {
             e.SetSessionID(instance.sessionID);
+
+            // Si el evento corresponde a un inicio de partida se incrementa el contador gameID
+            if (e is GameStateEvent gameStateEvent && gameStateEvent.GetEventType() == GameStateEvent.EventType.GameStart) 
+            {
+                // En la primera partida no se incrementa el contador para que el gameID sea el mismo
+                // que el del evento de inicio de sesion
+                if (!instance.isFirstGame) instance.gameID++;
+                else instance.isFirstGame = false;
+            }
+
+            e.SetGameID(instance.gameID);
             instance.eventQueue.AddEvent(e);
         }
 

@@ -39,7 +39,7 @@ namespace TelemetriaDOC
             s += "}";
             return s;
         }
-
+        public EventType GetEventType() { return _type; }
 
 
 

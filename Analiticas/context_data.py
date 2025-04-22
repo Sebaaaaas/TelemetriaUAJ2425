@@ -147,8 +147,8 @@ class GameContextData(ContextData):
         Additionally, it stores death positions in PLAYER:DEATH events
         """
         if event['eventType'] == "GameStart":
-       #     self.id = event["levelId"]
-             self.tsLevelStart = event['timestamp']       
+            self.id = event["gameID"]
+            self.tsLevelStart = event['timestamp']       
         elif (event['eventType'] == "GameEnd"): #and (self.id == event["levelId"]):
            self.tsLevelEnd = event['timestamp'] 
            self.levelLengthMs = self.tsLevelEnd - self.tsLevelStart
