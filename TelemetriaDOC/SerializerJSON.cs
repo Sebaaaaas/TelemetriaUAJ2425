@@ -6,6 +6,7 @@ namespace TelemetriaDOC
 {
     public class SerializerJSON : Serializer
     {
+        // El primer elemento del json se escribe ligeramente distinto
         bool firstTime = true;
         public SerializerJSON()
         {
@@ -33,7 +34,7 @@ namespace TelemetriaDOC
         }
         public string SerializerEnding()
         {
-            return "\n]\n";
+            return "\n]";
         }
     }
 }

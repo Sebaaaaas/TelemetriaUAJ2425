@@ -17,7 +17,7 @@ namespace TelemetriaDOC
 
         public override void Write(string s)
         {
-            file.WriteLine(s);
+            file.Write(s);
         }
 
         public override void Close()
