@@ -10,7 +10,7 @@ namespace TelemetriaDOC
         public enum ResultType { Sucess, Fail,Quit };
         EventType _type;
         ResultType _res;
-        public GameStateEvent(float timestamp, EventType type, ResultType result) : base(timestamp)
+        public GameStateEvent(EventType type, ResultType result)
         {
             name = type.ToString();
             _type = type;

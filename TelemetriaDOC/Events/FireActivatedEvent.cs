@@ -6,7 +6,7 @@ namespace TelemetriaDOC
 {
     public class FireActivatedEvent:Event
     {
-        public FireActivatedEvent(float timestamp) : base(timestamp)
+        public FireActivatedEvent()
         {
             name = "FireActivatedEvent";
         }

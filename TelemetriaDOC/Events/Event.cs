@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 
+using System;
+
 namespace TelemetriaDOC
 {
     public abstract class Event
@@ -11,12 +13,12 @@ namespace TelemetriaDOC
         
         private Guid _id_session;
         private int _id_game;
-        private float _timestamp;
+        private long _timestamp;
 
-        public Event(float timestamp)
+        public Event()
         {
             name = "Event";
-            _timestamp = timestamp;
+            _timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
         }
 
         public virtual string SerializeToJSON()

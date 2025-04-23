@@ -8,7 +8,7 @@ namespace TelemetriaDOC
     {
         public enum EventType { SessionStart, SessionEnd };
         EventType _type;
-        public SessionEvent(float timestamp, EventType type) : base(timestamp)
+        public SessionEvent(EventType type)
         {
             _type = type;
             name = _type.ToString();

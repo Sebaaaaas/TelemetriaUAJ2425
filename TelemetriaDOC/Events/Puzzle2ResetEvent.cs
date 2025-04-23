@@ -6,7 +6,7 @@ namespace TelemetriaDOC.Events
 {
     public class Puzzle2ResetEvent : Event
     {
-        public Puzzle2ResetEvent(float timestamp) : base(timestamp)
+        public Puzzle2ResetEvent()
         {
             name = "Puzzle2ResetEvent";
         }

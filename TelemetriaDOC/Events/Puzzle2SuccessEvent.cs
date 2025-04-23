@@ -7,7 +7,7 @@ namespace TelemetriaDOC.Events
 {
     public class Puzzle2SuccessEvent:Event
     {
-        public Puzzle2SuccessEvent(float timestamp) : base(timestamp)
+        public Puzzle2SuccessEvent()
         {
             name = "Puzzle2SuccessEvent";
         }

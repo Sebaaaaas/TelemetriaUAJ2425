@@ -6,7 +6,7 @@ namespace TelemetriaDOC
 {
     public class PlayerAttackEvent : Event
     {
-        public PlayerAttackEvent(float timestamp) : base(timestamp)
+        public PlayerAttackEvent()
         {
             name = "PlayerAttackEvent";
         }

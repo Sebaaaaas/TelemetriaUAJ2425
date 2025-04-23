@@ -7,7 +7,7 @@ namespace TelemetriaDOC
     public class TargetHitEvent:Event
     {
         private string hitterTag;
-        public TargetHitEvent(float timestamp, string _hitterTag) : base(timestamp)
+        public TargetHitEvent(string _hitterTag)
         {
             hitterTag = _hitterTag;
             name = "TargetHitEvent";

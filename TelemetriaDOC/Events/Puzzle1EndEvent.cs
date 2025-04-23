@@ -6,18 +6,14 @@ namespace TelemetriaDOC
 {
     public class Puzzle1EndEvent : Event
     {
-        //private Guid gameID;
-        public Puzzle1EndEvent(float timestamp/*, Guid _gameID*/) : base(timestamp)
+        public Puzzle1EndEvent()
         {
-           // gameID = _gameID;
             name = "Puzzle1EndEvent";
         }
         public override string SerializeToJSON()
         {
             string s = "{";
             s += base.SerializeToJSON();
-            //s += ", ";
-            //s += "\"GameID\" : " + gameID;
             s += "}";
             return s;
         }
