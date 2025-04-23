@@ -116,7 +116,7 @@ class GameContextData(ContextData):
         self.levelLengthMs = 0    
         self.numHitterFire = 0
         self.numActivateFire = 0
-        self.triesPuzzle2 = 0
+        self.triesPuzzle2 = None
         self.numHitterSword = 0
         self.numActivateSword = 0
         
@@ -168,6 +168,8 @@ class GameContextData(ContextData):
             self.numActivateSword+=1
         #Número de intentos del puzle 2
         elif(event['eventType']== "Puzzle2ResetEvent" or event['eventType']=='Puzzle2SuccessEvent'):
+            if(self.triesPuzzle2 ==None):
+                self.triesPuzzle2=0
             self.triesPuzzle2+=1
         #Marca de tiempo al empezar el puzle 1 y las veces que se empieza. También indicador de que el jugador esta en el puzle 1
         elif(event['eventType']== "Puzzle1StartEvent"):
