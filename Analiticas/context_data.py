@@ -182,18 +182,16 @@ class GameContextData(ContextData):
             self.triesPuzzle2+=1
         elif(event['eventType']== "Puzzle1StartEvent"):
             self.puzzle1Start=event['timestamp']
+            self.puzzle1StartEv+=1
         elif(event['eventType']== "Puzzle1EndEvent"):
             self.puzzle1Time=event['timestamp']-self.puzzle1Start
             self.puzzle1End += 1
-            self.puzzle1StartEv+=1
-        elif(event['eventType']== "Puzzle1EndEvent"):
             self.puzzle1EndEv+=1
         elif(event['eventType']== "Puzzle2StartEvent"):
             self.puzzle2StartEv+=1
             self.puzzle2Start=event['timestamp']
         elif(event['eventType']== "Puzzle2EndEvent"):
             self.puzzle2EndEv+=1
-        elif(event['eventType']== "Puzzle2EndEvent"):
             self.puzzle2Time=event['timestamp']-self.puzzle2Start
 
     
