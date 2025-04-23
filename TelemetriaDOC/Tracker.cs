@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace TelemetriaDOC
 {
@@ -9,16 +10,15 @@ namespace TelemetriaDOC
         private Serializer serializer;
         private Persistence persistence;
 
-        private EventQueue eventQueue;
-
         private Guid sessionID;
         private int gameID;
         private bool isFirstGame;
 
+        private EventQueue eventQueue;
+        // Temporizador para hacer flush a la cola de eventos
+        private static Timer flushTimer;
         private Tracker()
         {
-            // Para que los float se escriban siempre con "." en lugar de con ","
-            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
         }
 
         public static Tracker Instance()
@@ -26,12 +26,15 @@ namespace TelemetriaDOC
             return instance;
         }
 
-        public static bool Init(Format format, Type type, string name, int sizeQueue)
+        public static bool Init(Format format, Type type, string name, int sizeQueue, int timeBetweenFlush)
         {
             if (instance != null)
                 return false;
 
             instance = new Tracker();
+            
+            // Para que los float se escriban siempre con "." en lugar de con ","
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
 
             //Iniciar serializador
             instance.InitSerializer(format);
@@ -39,11 +42,13 @@ namespace TelemetriaDOC
             //Iniciar persistencia
             instance.InitPersistence(type, name);
 
-            instance.eventQueue = new EventQueue(ref instance, sizeQueue);
+            instance.eventQueue = new EventQueue(sizeQueue);
 
             instance.sessionID = Guid.NewGuid();
             instance.gameID = 0;
             instance.isFirstGame = true;
+
+            flushTimer = new Timer(_ => instance.Flush(), null, 0, timeBetweenFlush);
 
             return true;
         }
@@ -85,17 +90,17 @@ namespace TelemetriaDOC
             instance.eventQueue.AddEvent(e);
         }
 
-        public void Flush(ref Queue<Event> events)
+        public void Flush()
         {
             string text = "";
-
+            
             // Serializamos cada evento de la cola
-            while(events.Count > 0)
+            while(eventQueue.queue.Count > 0)
             {
-                text += instance.serializer.Serialize(events.Dequeue());
+                text += instance.serializer.Serialize(eventQueue.queue.Dequeue());
             }
 
-            events.Clear();
+            eventQueue.queue.Clear();
 
             instance.persistence.Write(text);            
         }
@@ -106,7 +111,9 @@ namespace TelemetriaDOC
         }
         private void CloseArch()
         {
-            instance.eventQueue.FlushQueue();
+
+            flushTimer.Dispose();
+            instance.Flush();
             instance.persistence.Write(instance.serializer.SerializerEnding());
             instance.persistence.Close();
         }
