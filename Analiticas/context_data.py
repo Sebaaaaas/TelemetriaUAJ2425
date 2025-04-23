@@ -141,6 +141,8 @@ class GameContextData(ContextData):
         self.puzzle2StartEv = 0
         self.puzzle2EndEv = 0
 
+        self.puzzleWithPlayer = 0
+
         self.puzzle1Time = None
         self.puzzle2Start = None
         self.puzzle2Time = None        
@@ -155,6 +157,11 @@ class GameContextData(ContextData):
             self.id = event["gameID"]
             self.tsLevelStart = event['timestamp']       
         elif (event['eventType'] == "GameEnd"): #and (self.id == event["levelId"]):
+           if(event['RESULT']== 'FAIL'):
+                if(self.puzzleWithPlayer == 1):
+                    self.puzzle1StartEv-=1
+                elif(self.puzzleWithPlayer == 2):
+                    self.puzzle2StartEv-=1
            self.tsLevelEnd = event['timestamp'] 
            self.levelLengthMs = self.tsLevelEnd - self.tsLevelStart
           # self.levelResult = event["result"]
@@ -183,6 +190,7 @@ class GameContextData(ContextData):
         elif(event['eventType']== "Puzzle1StartEvent"):
             self.puzzle1Start=event['timestamp']
             self.puzzle1StartEv+=1
+            self.puzzleWithPlayer = 1
         elif(event['eventType']== "Puzzle1EndEvent"):
             self.puzzle1Time=event['timestamp']-self.puzzle1Start
             self.puzzle1End += 1
@@ -190,9 +198,13 @@ class GameContextData(ContextData):
         elif(event['eventType']== "Puzzle2StartEvent"):
             self.puzzle2StartEv+=1
             self.puzzle2Start=event['timestamp']
+            self.puzzleWithPlayer = 2
         elif(event['eventType']== "Puzzle2EndEvent"):
             self.puzzle2EndEv+=1
             self.puzzle2Time=event['timestamp']-self.puzzle2Start
+        
+            
+
 
     
         return True
