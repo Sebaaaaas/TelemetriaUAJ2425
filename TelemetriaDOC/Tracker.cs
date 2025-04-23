@@ -20,12 +20,16 @@ namespace TelemetriaDOC
         private Tracker()
         {
         }
-
-        public static Tracker Instance()
-        {
-            return instance;
-        }
-
+        /// <summary>
+        /// Initializes the tracker.
+        /// This method must be called before using this tracker.
+        /// </summary>
+        /// <param name="format"> The format of the file. [JSON] </param>
+        /// <param name="type"> Specifies where the data will be store. [Disk] </param>
+        /// <param name="name"> The name of the persistance file. </param>
+        /// <param name="sizeQueue"> The maximum size of the queue where events will be store. </param>
+        /// <param name="timeBetweenFlush"> Maximum time in miliseconds between every flush of the queue. </param>
+        /// <returns></returns>
         public static bool Init(Format format, Type type, string name, int sizeQueue, int timeBetweenFlush)
         {
             if (instance != null)
@@ -54,7 +58,7 @@ namespace TelemetriaDOC
             return true;
         }
 
-        public void InitSerializer(Format format)
+        private void InitSerializer(Format format)
         {
             switch (format)
             {
@@ -64,7 +68,7 @@ namespace TelemetriaDOC
             }
         }
 
-        public bool InitPersistence(Type typeSave, string name)
+        private bool InitPersistence(Type typeSave, string name)
         {
             switch (typeSave)
             {
@@ -76,7 +80,10 @@ namespace TelemetriaDOC
                     return false;
             }
         }
-
+        /// <summary>
+        /// Adds a custom event to the telemetry system for tracking.
+        /// </summary>
+        /// <param name="e"> The tracked event. </param>
         public static void TrackEvent(Event e) 
         {
             if (instance == null)
@@ -97,7 +104,7 @@ namespace TelemetriaDOC
             instance.eventQueue.AddEvent(e);
         }
 
-        public void Flush()
+        private void Flush()
         {
             string text = "";
             
@@ -111,7 +118,10 @@ namespace TelemetriaDOC
 
             instance.persistence.Write(text);            
         }
-
+        /// <summary>
+        /// Closes the tracker. 
+        /// This method must be called after using this tracker.
+        /// </summary>
         public static void Closing()
         {
             if (instance == null)
@@ -121,7 +131,6 @@ namespace TelemetriaDOC
         }
         private void CloseFile()
         {
-
             flushTimer.Dispose();
             instance.Flush();
             instance.persistence.Write(instance.serializer.SerializerEnding());
