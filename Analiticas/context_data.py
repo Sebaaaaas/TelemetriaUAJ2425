@@ -1,53 +1,43 @@
 class ContextData:
-    """Abstract class with the main structure of a context data class
-    A context data has:
-    - A reference to the context stack to push new states
-    or pop itself
-    - A reference to the parent context, the context that created this.
-    It is useful to notify the parent that the child context is removed
-    from the context stack
-
-    ContextData contains two important methods:
-    - parseEvent: it decides what to do with the current event. This event can
-    be consumed (or not)
-    - onPopChildContext: what to do when a child context has been removed
-    from the context stack
+    """
+       Clase abstracta con la estructura de una clase ContextData
     """
 
     def __init__(self, contextStack, parentContext = None) -> None:
         """Constructor
-        A parent context can be None
+        Un contexto "padre" puede ser None
         """
         self.contextStack = contextStack
         self.parentContext = parentContext
 
     def parseEvent(self, event) -> bool:
-        """Parses the event.
-        Return True if the event must be consumed
+        """Parsea los eventos
+        Devuelve true si el evento debe ser consumido
         """
         pass
 
     def popContext(self) -> None:
-        """It is the best way to remove itself from the context stack
-        because this method notifies the paren context (if exists) that
-        the top context has been removed
+        """
+        Es la mejor manera para eliminarse a si mismo de la pila del context porque notifica al contexto padre (si existe)
+        que el contexto top tiene que ser eliminado
         """
         childContext = self.contextStack.pop()
         if self.parentContext is not None:
             self.parentContext.onPopChildContext(childContext)        
     
     def onPopChildContext(self,childContextData) -> None:
-        """What to do when a child context has been removed from the stack
+        """
+           Lo que hace cuando un contexto hijo ha sido eliminado de la pila
         
         Keyword arguments:
-        childContextData -- The context removed from the stack 
+        childContextData -- El contexto eliminado de la pila 
         """
         pass
 
 
 class RootContextData(ContextData):
-    """This is the first context data in the context stack
-    It creates game contexts and stores them 
+    """
+    Primer context data en la pila de contexto. Crea el contexto de juego y lo guarda
     """
 
     def __init__(self, contextStack, parentContext=None) -> None:
@@ -57,7 +47,7 @@ class RootContextData(ContextData):
         self.games = []
     
     def parseEvent(self, event) -> bool:
-        """Creates a new Session context on GAME:START event
+        """Crea un nuevo contexto Sesion
         """
         
         if event['eventType'] == "SessionStart":
@@ -67,16 +57,14 @@ class RootContextData(ContextData):
         return True
 
     def onPopChildContext(self,childContextData) -> None:
-        """Stores the session data when removed from the stack
+        """Guarda la sesión cuando es eliminada de la pila
         """
         self.games.append(childContextData)
 
 
 class SessionContextData(ContextData):
-    """Eventos por sesion"""
-    """Represents a game session (when the user starts a new game until wins or fails)
-    It stores when a game starts and finishes, its length and the information 
-    extracted from the levels played during the game session
+    """
+    Representa una partida
     """
     
     def __init__(self, contextStack, parentContext=None) -> None:
@@ -90,8 +78,8 @@ class SessionContextData(ContextData):
         self.levels = [] 
 
     def parseEvent(self, event) -> bool:
-        """It stores information on GAME:START and GAME:END events.
-        It also creates a GameContext when a level starts
+        """
+        Guarda informacion de los eventos GameStart y GameEnd y crea un GameContext 
         """
        
         if event['eventType'] == "GameStart":
@@ -107,17 +95,16 @@ class SessionContextData(ContextData):
         return True
     
     def onPopChildContext(self,childContextData) -> None:
-        """Stores a level context when it is removed from the stack
+        """Guarda un level context cuando se elimina de la pila
+
         """
         self.levels.append(childContextData)
 
 
 class GameContextData(ContextData):
 
-    """It stores information about level events:
-    - When the level starts and ends and its lenght
-    - The event result
-    - Player deaths during this level
+    """
+    Guarda la información sobre los eventos del nivel
     """
     def __init__(self, contextStack, parentContext=None) -> None:
         """Constructor
@@ -126,16 +113,14 @@ class GameContextData(ContextData):
         self.id = None
         self.tsLevelStart = None
         self.tsLevelEnd = None
-        self.levelLengthMs = 0
-        self.levelResult = None    
+        self.levelLengthMs = 0    
         self.numHitterFire = 0
         self.numActivateFire = 0
         self.triesPuzzle2 = 0
         self.numHitterSword = 0
         self.numActivateSword = 0
-        self.puzzle1Start = 0
-        self.puzzle1End = 0
-        self.puzzle1Time = 0        
+        
+        self.puzzle1End = 0       
         self.puzzle1StartEv = 0
         self.puzzle1EndEv = 0
         self.puzzle2StartEv = 0
@@ -144,19 +129,22 @@ class GameContextData(ContextData):
         self.puzzleWithPlayer = 0
 
         self.puzzle1Time = None
+        self.puzzle1Start = None
         self.puzzle2Start = None
         self.puzzle2Time = None        
         
 
     def parseEvent(self, event) -> bool:
         """Eventos por partida"""
-        """It stores data on LEVEL:START and LEVEL:END
-        Additionally, it stores death positions in PLAYER:DEATH events
-        """
+        
+        #Guarda el tiempo del comienzo de la partida
         if event['eventType'] == "GameStart":
             self.id = event["gameID"]
-            self.tsLevelStart = event['timestamp']       
-        elif (event['eventType'] == "GameEnd"): #and (self.id == event["levelId"]):
+            self.tsLevelStart = event['timestamp']     
+        
+        #Guarda el tiempo cuando se ha acabado el nivel y la duracion de la partida, además resta las muertes de los jugadores 
+        #para el calculo de la tasa de abandonos
+        elif (event['eventType'] == "GameEnd"): 
            if(event['RESULT']== 'FAIL'):
                 if(self.puzzleWithPlayer == 1):
                     self.puzzle1StartEv-=1
@@ -164,47 +152,41 @@ class GameContextData(ContextData):
                     self.puzzle2StartEv-=1
            self.tsLevelEnd = event['timestamp'] 
            self.levelLengthMs = self.tsLevelEnd - self.tsLevelStart
-          # self.levelResult = event["result"]
-           if self.numActivateFire > 0:
-                self.percentageFire = (self.numHitterFire / self.numActivateFire) * 100
-           else:
-                self.percentageFire = 0
-
-           if self.numActivateSword > 0:
-                self.percentageSword = (self.numHitterSword / self.numActivateSword) * 100
-           else:
-                self.percentageSword = 0
-            
            self.popContext()
 
+        #Número de veces que golpea el fuego en la diana
         elif (event['eventType'] == "TargetHitEvent" and event['Hitter']=='Fire'):
             self.numHitterFire+=1
+        #Número de veces que se activa el fuego
         elif(event['eventType'] == "FireActivatedEvent"):
             self.numActivateFire+=1
+        #Número de veces que golpea el jugador con la espada en la diana   
         elif (event['eventType'] == "TargetHitEvent" and event['Hitter']=='Sword'):
             self.numHitterSword+=1
+        #Número de veces que el jugador pulsa el botón de ataque
         elif(event['eventType'] == "PlayerAttackEvent"):
             self.numActivateSword+=1
+        #Número de intentos del puzle 2
         elif(event['eventType']== "Puzzle2ResetEvent" or event['eventType']=='Puzzle2SuccessEvent'):
             self.triesPuzzle2+=1
+        #Marca de tiempo al empezar el puzle 1 y las veces que se empieza. También indicador de que el jugador esta en el puzle 1
         elif(event['eventType']== "Puzzle1StartEvent"):
             self.puzzle1Start=event['timestamp']
             self.puzzle1StartEv+=1
             self.puzzleWithPlayer = 1
+        #Duración del puzle 1 y ver cuantas veces se acaba (para la tasa de abandonos)
         elif(event['eventType']== "Puzzle1EndEvent"):
             self.puzzle1Time=event['timestamp']-self.puzzle1Start
             self.puzzle1End += 1
             self.puzzle1EndEv+=1
+        #Marca de tiempo al empezar el puzle 2 y las veces que se empieza. También indicador de que el jugador esta en el puzle 2
         elif(event['eventType']== "Puzzle2StartEvent"):
             self.puzzle2StartEv+=1
             self.puzzle2Start=event['timestamp']
             self.puzzleWithPlayer = 2
+        #Duración del puzle 2 y ver cuantas veces se acaba (para la tasa de abandonos)
         elif(event['eventType']== "Puzzle2EndEvent"):
             self.puzzle2EndEv+=1
             self.puzzle2Time=event['timestamp']-self.puzzle2Start
         
-            
-
-
-    
         return True
