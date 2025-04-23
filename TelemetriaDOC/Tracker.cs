@@ -40,7 +40,8 @@ namespace TelemetriaDOC
             instance.InitSerializer(format);
 
             //Iniciar persistencia
-            instance.InitPersistence(type, name);
+            if(!instance.InitPersistence(type, name))
+                return false;
 
             instance.eventQueue = new EventQueue(sizeQueue);
 
@@ -63,18 +64,24 @@ namespace TelemetriaDOC
             }
         }
 
-        public void InitPersistence(Type typeSave, string name)
+        public bool InitPersistence(Type typeSave, string name)
         {
             switch (typeSave)
             {
                 case Type.Disk:
-                    instance.persistence = new DiskPersistence(name, instance.serializer);
-                    break;
+                    instance.persistence = new DiskPersistence();
+                    return ((DiskPersistence)instance.persistence).Init(name, instance.serializer);
+
+                default:
+                    return false;
             }
         }
 
         public static void TrackEvent(Event e) 
         {
+            if (instance == null)
+                return;
+
             e.SetSessionID(instance.sessionID);
 
             // Si el evento corresponde a un inicio de partida se incrementa el contador gameID
@@ -107,9 +114,12 @@ namespace TelemetriaDOC
 
         public static void Closing()
         {
-            instance.CloseArch();
+            if (instance == null)
+                return;
+
+            instance.CloseFile();
         }
-        private void CloseArch()
+        private void CloseFile()
         {
 
             flushTimer.Dispose();

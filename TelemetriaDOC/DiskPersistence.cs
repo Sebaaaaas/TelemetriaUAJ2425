@@ -9,10 +9,24 @@ namespace TelemetriaDOC
     {
         private string persistanceFileName;
         private StreamWriter file;
-        public DiskPersistence(string persistanceFileName_, Serializer serializer_)
+        public DiskPersistence()
         {
-            persistanceFileName = persistanceFileName_ + serializer_.GetExtension();
-            file = new StreamWriter(persistanceFileName, false);
+            
+        }
+
+        public bool Init(string persistanceFileName_, Serializer serializer_)
+        {
+            try
+            {
+                persistanceFileName = persistanceFileName_ + serializer_.GetExtension();
+                file = new StreamWriter(persistanceFileName, false);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public override void Write(string s)
